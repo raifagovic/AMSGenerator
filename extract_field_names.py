@@ -1,7 +1,6 @@
 import os
 import fitz
 import sys
-import re
 
 def get_field_names(pdf_path):
     script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -13,11 +12,12 @@ def get_field_names(pdf_path):
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
 
-        # Extract text from the page
-        page_text = page.get_text()
+        # Extract and print the raw text from the page
+        page_text = page.get_text("text")
+        print("Page {} raw text:\n{}".format(page_number + 1, page_text))
 
         # Use regex to find potential form field names
-        potential_field_names = re.findall(r'/T\s*\((.*?)\)', page_text)
+        potential_field_names = [match.group(1) for match in re.finditer(r'/T\s*\((.*?)\)', page_text)]
 
         for field_name in potential_field_names:
             field_names.add(field_name)
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     # Example usage
     names = get_field_names(pdf_path)
-    print(names)
+    print("Extracted field names:", names)
 
 
 
