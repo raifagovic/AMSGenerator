@@ -1,29 +1,29 @@
 import os
 import fitz
 import sys
+import re
 
 def get_field_names(pdf_path):
     script_directory = os.path.dirname(os.path.abspath(__file__))
     pdf_full_path = os.path.join(script_directory, pdf_path)
 
     pdf_document = fitz.open(pdf_full_path)
-    field_names = []
+    field_names = set()
 
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
 
-        # Retrieve the annotations using get_text("annot")
-        annotations = page.get_text("annot", area=page.rect)
+        # Extract text from the page
+        page_text = page.get_text()
 
-        for annotation in annotations:
-            # Check if the annotation is a WidgetAnnotation
-            if annotation["flags"] & (1 << 5):  # Check if the annotation is a WidgetAnnotation
-                field_name = annotation["title"]
-                if field_name:
-                    field_names.append(field_name)
+        # Use regex to find potential form field names
+        potential_field_names = re.findall(r'/T\s*\((.*?)\)', page_text)
+
+        for field_name in potential_field_names:
+            field_names.add(field_name)
 
     pdf_document.close()
-    return field_names
+    return list(field_names)
 
 if __name__ == "__main__":
     # Check if a command-line argument (PDF file path) is provided
@@ -37,6 +37,7 @@ if __name__ == "__main__":
     # Example usage
     names = get_field_names(pdf_path)
     print(names)
+
 
 
 
