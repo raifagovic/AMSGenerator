@@ -1,6 +1,6 @@
 import os
 import fitz
-import sys  # Import the sys module
+import sys
 
 def get_field_names(pdf_path):
     script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -11,12 +11,17 @@ def get_field_names(pdf_path):
 
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
-        for annot_index in range(page.annotsSize()):
-            annotation = page.getAnnot(annot_index)
-            if annotation.type[0] == 4:  # Check if the annotation is a WidgetAnnotation
-                field = annotation.getFormField()
-                if field:
-                    field_names.append(field.name)
+        
+        # Retrieve the annotation size using getInheritableAttribute
+        annot_size = page.getInheritableAttribute("Annots")
+        
+        if annot_size:
+            for annot_index in range(annot_size):
+                annotation = page.getAnnot(annot_index)
+                if annotation.type[0] == 4:  # Check if the annotation is a WidgetAnnotation
+                    field = annotation.getFormField()
+                    if field:
+                        field_names.append(field.name)
 
     pdf_document.close()
     return field_names
@@ -33,5 +38,6 @@ if __name__ == "__main__":
     # Example usage
     names = get_field_names(pdf_path)
     print(names)
+
 
 
