@@ -15,7 +15,7 @@ def get_field_names(pdf_path):
     return field_names
 
 # Example usage
-pdf_path = 'ams_generator.pdf'  # Change to your actual PDF file name
+pdf_path = 'Resources/ams_generator.pdf'  # Change to your actual PDF file name
 names = get_field_names(pdf_path)
 print(names)
 
