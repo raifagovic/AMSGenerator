@@ -13,7 +13,7 @@ def get_field_names(pdf_path):
         page = pdf_document[page_number]
 
         # Retrieve the annotations using get_text("annot")
-        annotations = page.get_text("annot", clip=page.rect, clip_flags=1)
+        annotations = page.get_text("annot", area=page.rect)
 
         for annotation in annotations:
             # Check if the annotation is a WidgetAnnotation
@@ -37,6 +37,7 @@ if __name__ == "__main__":
     # Example usage
     names = get_field_names(pdf_path)
     print(names)
+
 
 
 
