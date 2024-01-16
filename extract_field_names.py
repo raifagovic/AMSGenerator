@@ -1,6 +1,7 @@
 import os
 import fitz
 import sys
+import re
 
 def get_field_names(pdf_path):
     script_directory = os.path.dirname(os.path.abspath(__file__))
