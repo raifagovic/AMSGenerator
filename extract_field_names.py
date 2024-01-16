@@ -12,16 +12,14 @@ def get_field_names(pdf_path):
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
         
-        # Retrieve the annotation size using getInheritableAttribute
-        annot_size = page.getInheritableAttribute("Annots")
+        # Retrieve the annotations using getAnnotations()
+        annotations = page.getAnnotations()
         
-        if annot_size:
-            for annot_index in range(annot_size):
-                annotation = page.getAnnot(annot_index)
-                if annotation.type[0] == 4:  # Check if the annotation is a WidgetAnnotation
-                    field = annotation.getFormField()
-                    if field:
-                        field_names.append(field.name)
+        for annotation in annotations:
+            if annotation.type[0] == 4:  # Check if the annotation is a WidgetAnnotation
+                field = annotation.getFormField()
+                if field:
+                    field_names.append(field.name)
 
     pdf_document.close()
     return field_names
@@ -38,6 +36,7 @@ if __name__ == "__main__":
     # Example usage
     names = get_field_names(pdf_path)
     print(names)
+
 
 
 
