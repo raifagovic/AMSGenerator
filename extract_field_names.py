@@ -11,15 +11,16 @@ def get_field_names(pdf_path):
 
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
-        
-        # Retrieve the annotations using get_drawings()
-        drawings = page.get_drawings()
-        
-        for drawing in drawings:
-            if drawing.type[0] == 4:  # Check if the drawing is a WidgetAnnotation
-                field = drawing.getFormField()
-                if field:
-                    field_names.append(field.name)
+
+        # Retrieve the annotations using get_text("annot")
+        annotations = page.get_text("annot", clip=page.rect, clip_flags=1)
+
+        for annotation in annotations:
+            # Check if the annotation is a WidgetAnnotation
+            if annotation["flags"] & (1 << 5):  # Check if the annotation is a WidgetAnnotation
+                field_name = annotation["title"]
+                if field_name:
+                    field_names.append(field_name)
 
     pdf_document.close()
     return field_names
@@ -36,6 +37,7 @@ if __name__ == "__main__":
     # Example usage
     names = get_field_names(pdf_path)
     print(names)
+
 
 
 
