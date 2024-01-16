@@ -1,5 +1,6 @@
 import os
 import fitz
+import sys  # Import the sys module
 
 def get_field_names(pdf_path):
     script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -10,10 +11,12 @@ def get_field_names(pdf_path):
 
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
-        for annot_index in range(page.AnnotCount):
+        for annot_index in range(page.annotsSize()):
             annotation = page.getAnnot(annot_index)
-            if annotation.fieldName:
-                field_names.append(annotation.fieldName)
+            if annotation.type[0] == 4:  # Check if the annotation is a WidgetAnnotation
+                field = annotation.getFormField()
+                if field:
+                    field_names.append(field.name)
 
     pdf_document.close()
     return field_names
