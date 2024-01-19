@@ -1,13 +1,11 @@
 import Foundation
 import CoreGraphics
-import CoreServices
 
 // Set the path to the image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
 // Load image using Core Graphics
-guard let image = NSImage(contentsOfFile: imagePath),
-      let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+guard let cgImage = CGImage(url: URL(fileURLWithPath: imagePath)) else {
     // Handle error loading image
     exit(1)
 }
@@ -40,8 +38,8 @@ let text = "John Doe"
 let textCoordinates = CGPoint(x: 100, y: 200)
 
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: CTFontCreateWithName(("Helvetica" as CFString), 12, nil),
-    .foregroundColor: CGColor.black
+    .font: UIFont.systemFont(ofSize: 12),
+    .foregroundColor: UIColor.black
 ]
 
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
