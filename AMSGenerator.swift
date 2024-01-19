@@ -1,11 +1,14 @@
 import Foundation
+import Cocoa
 import CoreGraphics
+import CoreServices
 
 // Set the path to the image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
-// Load image using Core Graphics
-guard let cgImage = CGImage(url: URL(fileURLWithPath: imagePath)) else {
+// Load image using NSImage
+guard let image = NSImage(contentsOfFile: imagePath),
+      let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
     // Handle error loading image
     exit(1)
 }
@@ -37,16 +40,11 @@ context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 let text = "John Doe"
 let textCoordinates = CGPoint(x: 100, y: 200)
 
-let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: UIFont.systemFont(ofSize: 12),
-    .foregroundColor: UIColor.black
-]
-
-let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-let line = CTLineCreateWithAttributedString(attributedText)
-
-context.textPosition = textCoordinates
-CTLineDraw(line, context)
+// Use NSFont and NSColor for text attributes
+text.draw(at: textCoordinates, withAttributes: [
+    .font: NSFont.systemFont(ofSize: 12),
+    .foregroundColor: NSColor.black
+])
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
@@ -59,6 +57,7 @@ CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
 
