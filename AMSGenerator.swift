@@ -41,10 +41,19 @@ let text = "John Doe"
 let textCoordinates = CGPoint(x: 100, y: 200)
 
 // Use NSFont and NSColor for text attributes
-text.draw(at: textCoordinates, withAttributes: [
+let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 12),
     .foregroundColor: NSColor.black
-])
+]
+
+let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+
+// Flip the coordinate system because Core Graphics uses a different origin
+context.translateBy(x: 0, y: CGFloat(height))
+context.scaleBy(x: 1, y: -1)
+
+// Draw the text onto the flipped context
+attributedText.draw(at: textCoordinates)
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
@@ -57,6 +66,7 @@ CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
 
