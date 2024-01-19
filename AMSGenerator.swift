@@ -6,8 +6,8 @@ import CoreServices
 let imagePath = "Resources/ams_form.png"
 
 // Load image using Core Graphics
-guard let backgroundImage = NSImage(contentsOfFile: imagePath),
-      let cgImage = backgroundImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+guard let image = NSImage(contentsOfFile: imagePath),
+      let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
     // Handle error loading image
     exit(1)
 }
@@ -15,6 +15,7 @@ guard let backgroundImage = NSImage(contentsOfFile: imagePath),
 // Create a mutable bitmap context
 let width = cgImage.width
 let height = cgImage.height
+
 let colorSpace = CGColorSpaceCreateDeviceRGB()
 let bytesPerPixel = 4
 let bytesPerRow = bytesPerPixel * width
@@ -37,19 +38,17 @@ context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 // Add text to the image
 let text = "John Doe"
 let textCoordinates = CGPoint(x: 100, y: 200)
+
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: NSFont.systemFont(ofSize: 12),
-    .foregroundColor: NSColor.black
+    .font: CTFontCreateWithName(("Helvetica" as CFString), 12, nil),
+    .foregroundColor: CGColor.black
 ]
 
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-attributedText.draw(at: textCoordinates)
+let line = CTLineCreateWithAttributedString(attributedText)
 
-// Save the final image
-guard let finalImage = context.makeImage() else {
-    // Handle error creating final image
-    exit(1)
-}
+context.textPosition = textCoordinates
+CTLineDraw(line, context)
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
@@ -58,9 +57,10 @@ guard let destination = CGImageDestinationCreateWithURL(outputURL as CFURL, kUTT
     exit(1)
 }
 
-CGImageDestinationAddImage(destination, finalImage, nil)
+CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
