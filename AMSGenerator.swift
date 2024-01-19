@@ -1,56 +1,66 @@
 import Foundation
 import CoreGraphics
-import CoreImage
-import CoreText
+import CoreServices
 
-// Function to add text to an image
-func addTextToImage(image: NSImage, text: String, coordinates: CGPoint) -> NSImage {
-    let imageRect = NSRect(origin: .zero, size: image.size)
+// Set the path to the image in the Resources folder
+let imagePath = "Resources/ams_form.png"
 
-    let bitmap = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
-    NSGraphicsContext.saveGraphicsState()
-    NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
-
-    // Draw the original image
-    image.draw(in: imageRect)
-
-    // Draw text on the image
-    let textAttributes: [NSAttributedString.Key: Any] = [
-        .font: NSFont.systemFont(ofSize: 12),
-        .foregroundColor: NSColor.black
-    ]
-
-    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-    attributedText.draw(at: coordinates)
-
-    NSGraphicsContext.restoreGraphicsState()
-
-    let resultImage = NSImage(size: image.size)
-    resultImage.addRepresentation(bitmap)
-
-    return resultImage
+// Load image using Core Graphics
+guard let backgroundImage = NSImage(contentsOfFile: imagePath),
+      let cgImage = backgroundImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+    // Handle error loading image
+    exit(1)
 }
 
-// Function to export an image as a PDF
-func exportImageAsPDF(image: NSImage, outputPath: String) {
-    let pdfData = image.pdf()
+// Create a mutable bitmap context
+let width = cgImage.width
+let height = cgImage.height
+let colorSpace = CGColorSpaceCreateDeviceRGB()
+let bytesPerPixel = 4
+let bytesPerRow = bytesPerPixel * width
+let bitsPerComponent = 8
 
-    do {
-        try pdfData.write(to: URL(fileURLWithPath: outputPath))
-        print("PDF exported successfully.")
-    } catch {
-        print("Error exporting PDF: \(error.localizedDescription)")
-    }
+guard let context = CGContext(data: nil,
+                              width: width,
+                              height: height,
+                              bitsPerComponent: bitsPerComponent,
+                              bytesPerRow: bytesPerRow,
+                              space: colorSpace,
+                              bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+    // Handle error creating graphics context
+    exit(1)
 }
 
-// Example usage
-let imagePath = "path/to/your/image.png"
-let outputPDFPath = "path/to/your/output.pdf"
-let image = NSImage(contentsOfFile: imagePath)!
+// Draw the original image into the context
+context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 
-let newText = "Hello, Swift!"
-let textCoordinates = CGPoint(x: 100, y: 100)
+// Add text to the image
+let text = "John Doe"
+let textCoordinates = CGPoint(x: 100, y: 200)
+let textAttributes: [NSAttributedString.Key: Any] = [
+    .font: NSFont.systemFont(ofSize: 12),
+    .foregroundColor: NSColor.black
+]
 
-let imageWithText = addTextToImage(image: image, text: newText, coordinates: textCoordinates)
-exportImageAsPDF(image: imageWithText, outputPath: outputPDFPath)
+let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+attributedText.draw(at: textCoordinates)
+
+// Save the final image
+guard let finalImage = context.makeImage() else {
+    // Handle error creating final image
+    exit(1)
+}
+
+// Save the final image to the same Resources folder
+let outputURL = URL(fileURLWithPath: "Resources/output.png")
+guard let destination = CGImageDestinationCreateWithURL(outputURL as CFURL, kUTTypePNG, 1, nil) else {
+    // Handle error creating image destination
+    exit(1)
+}
+
+CGImageDestinationAddImage(destination, finalImage, nil)
+CGImageDestinationFinalize(destination)
+
+print("Image saved to \(outputURL.path)")
+
 
