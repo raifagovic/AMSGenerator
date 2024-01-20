@@ -15,7 +15,7 @@ let mutableImage = image.copy() as! NSImage
 
 // Add text to the image
 let text = "John Doe"
-let textCoordinates = NSPoint(x: 100, y: 200)
+let textCoordinates = NSPoint(x: 120, y: 250) // Adjusted coordinates
 
 mutableImage.lockFocus()
 
