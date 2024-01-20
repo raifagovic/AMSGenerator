@@ -50,7 +50,8 @@ let attributedText = NSAttributedString(string: text, attributes: textAttributes
 
 // Draw the text onto the context at the specified coordinates
 context.saveGState()
-context.concatenate(.init(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(height))) // Flip the coordinate system
+context.translateBy(x: 0, y: CGFloat(height))
+context.scaleBy(x: 1, y: -1) // Flip the coordinate system
 attributedText.draw(at: textCoordinates)
 context.restoreGState()
 
@@ -65,6 +66,7 @@ CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
 
