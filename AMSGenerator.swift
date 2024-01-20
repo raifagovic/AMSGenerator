@@ -1,74 +1,54 @@
 import Foundation
-import CoreGraphics
-import CoreServices
+import Cocoa
 
 // Set the path to the image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
 // Load image using NSImage
-guard let image = NSImage(contentsOfFile: imagePath),
-      let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+guard let image = NSImage(contentsOfFile: imagePath) else {
     // Handle error loading image
     exit(1)
 }
 
-// Create a mutable bitmap context
-let width = cgImage.width
-let height = cgImage.height
-
-let colorSpace = CGColorSpaceCreateDeviceRGB()
-let bytesPerPixel = 4
-let bitsPerComponent = 8
-
-guard let context = CGContext(data: nil,
-                              width: width,
-                              height: height,
-                              bitsPerComponent: bitsPerComponent,
-                              bytesPerRow: bytesPerPixel * width,
-                              space: colorSpace,
-                              bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
-    // Handle error creating graphics context
-    exit(1)
-}
-
-// Draw the original image into the context
-context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+// Create a mutable copy of the image
+let mutableImage = image.copy() as! NSImage
 
 // Add text to the image
 let text = "John Doe"
-let textCoordinates = CGPoint(x: 100, y: 200)
+let textCoordinates = NSPoint(x: 100, y: 200)
 
-// Use Core Graphics for text drawing
-context.saveGState()
-context.translateBy(x: 0, y: CGFloat(height))
-context.scaleBy(x: 1, y: -1) // Flip the coordinate system
-
-let textFont = CTFontCreateWithName("Helvetica" as CFString, 12, nil)
+// Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: textFont,
-    .foregroundColor: CGColor.black
+    .font: NSFont.systemFont(ofSize: 12),
+    .foregroundColor: NSColor.black
 ]
 
+mutableImage.lockFocus()
+
+// Flip the coordinate system
+NSGraphicsContext.current?.cgContext.textMatrix = .identity
+NSGraphicsContext.current?.cgContext.translateBy(x: 0, y: mutableImage.size.height)
+NSGraphicsContext.current?.cgContext.scaleBy(x: 1, y: -1)
+
+// Draw the text onto the image at the specified coordinates
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-let textPath = CGPath(rect: CGRect(origin: textCoordinates, size: CGSize(width: 200, height: 20)), transform: nil)
+attributedText.draw(at: textCoordinates)
 
-let frameSetter = CTFramesetterCreateWithAttributedString(attributedText)
-let frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, attributedText.length), textPath, nil)
-CTFrameDraw(frame, context)
-
-context.restoreGState()
+mutableImage.unlockFocus()
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
-guard let destination = CGImageDestinationCreateWithURL(outputURL as CFURL, kUTTypePNG, 1, nil) else {
-    // Handle error creating image destination
-    exit(1)
+if let data = mutableImage.tiffRepresentation {
+    do {
+        try data.write(to: outputURL)
+        print("Image saved to \(outputURL.path)")
+    } catch {
+        print("Error saving image: \(error)")
+    }
+} else {
+    print("Error getting tiff representation of the image.")
 }
 
-CGImageDestinationAddImage(destination, context.makeImage()!, nil)
-CGImageDestinationFinalize(destination)
-
-print("Image saved to \(outputURL.path)")
 
 
 
