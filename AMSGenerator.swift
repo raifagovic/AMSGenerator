@@ -17,25 +17,20 @@ let mutableImage = image.copy() as! NSImage
 let text = "John Doe"
 let textCoordinates = NSPoint(x: 100, y: 200)
 
+mutableImage.lockFocus()
+
 // Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 12),
     .foregroundColor: NSColor.black
 ]
 
-mutableImage.lockFocus()
-
-// Flip the coordinate system
-NSGraphicsContext.current?.saveGraphicsState()
-NSGraphicsContext.current?.cgContext.textMatrix = .identity
-NSGraphicsContext.current?.cgContext.translateBy(x: textCoordinates.x, y: textCoordinates.y + mutableImage.size.height)
-NSGraphicsContext.current?.cgContext.scaleBy(x: 1, y: -1)
-
 // Draw the text onto the image at the specified coordinates
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-attributedText.draw(with: NSRect(origin: .zero, size: mutableImage.size))
+let textSize = attributedText.size()
+let rect = NSRect(origin: textCoordinates, size: textSize)
 
-NSGraphicsContext.current?.restoreGraphicsState()
+attributedText.draw(with: rect)
 
 mutableImage.unlockFocus()
 
