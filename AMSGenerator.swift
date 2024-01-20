@@ -14,14 +14,14 @@ guard let image = NSImage(contentsOfFile: imagePath) else {
 let mutableImage = image.copy() as! NSImage
 
 // Add text to the image
-let text = "John Doe"
-let textCoordinates = NSPoint(x: 120, y: 250) // Adjusted coordinates
+let text = "Mujo Mujic"
+let textCoordinates = NSPoint(x: 290, y: 1190) // Adjusted coordinates
 
 mutableImage.lockFocus()
 
 // Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: NSFont.systemFont(ofSize: 12),
+    .font: NSFont.systemFont(ofSize: 22),
     .foregroundColor: NSColor.black
 ]
 
