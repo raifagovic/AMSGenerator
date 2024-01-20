@@ -5,14 +5,14 @@ import CoreServices
 // Set the path to the image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
-// Create a mutable bitmap context from the image
-let inputURL = URL(fileURLWithPath: imagePath)
-guard let imageSource = CGImageSourceCreateWithURL(inputURL as CFURL, nil),
-      let cgImage = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+// Load image using NSImage
+guard let image = NSImage(contentsOfFile: imagePath),
+      let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
     // Handle error loading image
     exit(1)
 }
 
+// Create a mutable bitmap context
 let width = cgImage.width
 let height = cgImage.height
 
@@ -38,12 +38,25 @@ context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 let text = "John Doe"
 let textCoordinates = CGPoint(x: 100, y: 200)
 
-// Use Core Text for text drawing
+// Use Core Graphics for text drawing
+context.saveGState()
+context.translateBy(x: 0, y: CGFloat(height))
+context.scaleBy(x: 1, y: -1) // Flip the coordinate system
+
 let textFont = CTFontCreateWithName("Helvetica" as CFString, 12, nil)
-let textString = NSAttributedString(string: text, attributes: [.font: textFont, .foregroundColor: CGColor.black] as [NSAttributedString.Key : Any])
-let textLine = CTLineCreateWithAttributedString(textString)
-context.textPosition = textCoordinates
-CTLineDraw(textLine, context)
+let textAttributes: [NSAttributedString.Key: Any] = [
+    .font: textFont,
+    .foregroundColor: CGColor.black
+]
+
+let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+let textPath = CGPath(rect: CGRect(origin: textCoordinates, size: CGSize(width: 200, height: 20)), transform: nil)
+
+let frameSetter = CTFramesetterCreateWithAttributedString(attributedText)
+let frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, attributedText.length), textPath, nil)
+CTFrameDraw(frame, context)
+
+context.restoreGState()
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
@@ -56,6 +69,7 @@ CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
 
