@@ -14,17 +14,17 @@ guard let image = NSImage(contentsOfFile: imagePath),
 }
 
 // Create a mutable bitmap context
-let imgWidth = cgImage.width
-let imgHeight = cgImage.height
+let width = cgImage.width
+let height = cgImage.height
 
 let colorSpace = CGColorSpaceCreateDeviceRGB()
 let bytesPerPixel = 4
-let bytesPerRow = bytesPerPixel * imgWidth
+let bytesPerRow = bytesPerPixel * width
 let bitsPerComponent = 8
 
 guard let context = CGContext(data: nil,
-                              width: imgWidth,
-                              height: imgHeight,
+                              width: width,
+                              height: height,
                               bitsPerComponent: bitsPerComponent,
                               bytesPerRow: bytesPerRow,
                               space: colorSpace,
@@ -34,11 +34,11 @@ guard let context = CGContext(data: nil,
 }
 
 // Draw the original image into the context
-context.draw(cgImage, in: CGRect(x: 0, y: 0, width: imgWidth, height: imgHeight))
+context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 
 // Add text to the image
 let text = "John Doe"
-let textCoordinates = CGPoint(x: 100, y: imgHeight - 200) // Adjusted y-coordinate
+let textCoordinates = CGPoint(x: 100, y: 200)
 
 // Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
@@ -49,7 +49,10 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
 
 // Draw the text onto the context at the specified coordinates
+context.saveGState()
+context.concatenate(.init(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(height))) // Flip the coordinate system
 attributedText.draw(at: textCoordinates)
+context.restoreGState()
 
 // Save the final image to the same Resources folder
 let outputURL = URL(fileURLWithPath: "Resources/output.png")
@@ -62,6 +65,7 @@ CGImageDestinationAddImage(destination, context.makeImage()!, nil)
 CGImageDestinationFinalize(destination)
 
 print("Image saved to \(outputURL.path)")
+
 
 
 
