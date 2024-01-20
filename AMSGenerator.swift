@@ -26,13 +26,16 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 mutableImage.lockFocus()
 
 // Flip the coordinate system
+NSGraphicsContext.current?.saveGraphicsState()
 NSGraphicsContext.current?.cgContext.textMatrix = .identity
-NSGraphicsContext.current?.cgContext.translateBy(x: 0, y: mutableImage.size.height)
+NSGraphicsContext.current?.cgContext.translateBy(x: textCoordinates.x, y: textCoordinates.y + mutableImage.size.height)
 NSGraphicsContext.current?.cgContext.scaleBy(x: 1, y: -1)
 
 // Draw the text onto the image at the specified coordinates
 let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-attributedText.draw(at: textCoordinates)
+attributedText.draw(with: NSRect(origin: .zero, size: mutableImage.size))
+
+NSGraphicsContext.current?.restoreGraphicsState()
 
 mutableImage.unlockFocus()
 
@@ -48,6 +51,7 @@ if let data = mutableImage.tiffRepresentation {
 } else {
     print("Error getting tiff representation of the image.")
 }
+
 
 
 
