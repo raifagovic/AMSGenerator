@@ -15,46 +15,58 @@ let mutableImage = image.copy() as! NSImage
 
 // Prompt user for "Ime i prezime:" and get input
 print("Ime i prezime:", terminator: " ")
-if let userInput = readLine() {
-    // Add user input as text to the image
-    let name = userInput
-    let textCoordinates = NSPoint(x: 290, y: 1190) // Adjusted coordinates
+if let name = readLine() {
+    // Prompt user for "Adresa:" and get input
+    print("Adresa:", terminator: " ")
+    if let address = readLine() {
+        // Add user input as text to the image
+        let nameCoordinates = NSPoint(x: 290, y: 1190) // Adjusted coordinates for name
+        let addressCoordinates = NSPoint(x: 250, y: 1100) // Adjusted coordinates for address
 
-    mutableImage.lockFocus()
+        mutableImage.lockFocus()
 
-    // Use NSFont and NSColor for text attributes
-    let textAttributes: [NSAttributedString.Key: Any] = [
-        .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
-        .foregroundColor: NSColor.black
-    ]
+        // Use NSFont and NSColor for text attributes
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
+            .foregroundColor: NSColor.black
+        ]
 
-    // Draw the text onto the image at the specified coordinates
-    let attributedText = NSAttributedString(string: name, attributes: textAttributes)
-    let textSize = attributedText.size()
-    let rect = NSRect(origin: textCoordinates, size: textSize)
+        // Draw the name onto the image at the specified coordinates
+        let nameText = NSAttributedString(string: name, attributes: textAttributes)
+        let nameSize = nameText.size()
+        let nameRect = NSRect(origin: nameCoordinates, size: nameSize)
+        nameText.draw(with: nameRect)
 
-    attributedText.draw(with: rect)
+        // Draw the address onto the image at the specified coordinates
+        let addressText = NSAttributedString(string: address, attributes: textAttributes)
+        let addressSize = addressText.size()
+        let addressRect = NSRect(origin: addressCoordinates, size: addressSize)
+        addressText.draw(with: addressRect)
 
-    mutableImage.unlockFocus()
+        mutableImage.unlockFocus()
 
-    // Save the final image in JPEG format to the same Resources folder
-    let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
-    if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
-        let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
-        let jpegData = bitmapRep.representation(using: .jpeg, properties: [:])
-        
-        do {
-            try jpegData?.write(to: outputURL)
-            print("Image saved to \(outputURL.path)")
-        } catch {
-            print("Error saving image: \(error)")
+        // Save the final image in JPEG format to the same Resources folder
+        let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
+        if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+            let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+            let jpegData = bitmapRep.representation(using: .jpeg, properties: [:])
+            
+            do {
+                try jpegData?.write(to: outputURL)
+                print("Image saved to \(outputURL.path)")
+            } catch {
+                print("Error saving image: \(error)")
+            }
+        } else {
+            print("Error getting CGImage representation of the image.")
         }
     } else {
-        print("Error getting CGImage representation of the image.")
+        print("Error reading address input.")
     }
 } else {
-    print("Error reading user input.")
+    print("Error reading name input.")
 }
+
 
 
 
