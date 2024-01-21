@@ -21,7 +21,7 @@ mutableImage.lockFocus()
 
 // Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: NSFont.systemFont(ofSize: 12),
+    .font: NSFont.systemFont(ofSize: 27),
     .foregroundColor: NSColor.black
 ]
 
