@@ -17,7 +17,7 @@ let mutableImage = image.copy() as! NSImage
 print("Ime i prezime:", terminator: " ")
 if let userInput = readLine() {
     // Add user input as text to the image
-    let text = userInput
+    let name = userInput
     let textCoordinates = NSPoint(x: 290, y: 1190) // Adjusted coordinates
 
     mutableImage.lockFocus()
@@ -29,7 +29,7 @@ if let userInput = readLine() {
     ]
 
     // Draw the text onto the image at the specified coordinates
-    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+    let attributedText = NSAttributedString(string: name, attributes: textAttributes)
     let textSize = attributedText.size()
     let rect = NSRect(origin: textCoordinates, size: textSize)
 
@@ -55,6 +55,7 @@ if let userInput = readLine() {
 } else {
     print("Error reading user input.")
 }
+
 
 
 
