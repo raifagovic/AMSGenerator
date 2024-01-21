@@ -1,10 +1,10 @@
 import Foundation
 import Cocoa
 
-// Set the path to the image in the Resources folder
+// Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
-// Load image using NSImage
+// Load PNG image using NSImage
 guard let image = NSImage(contentsOfFile: imagePath) else {
     // Handle error loading image
     exit(1)
@@ -21,7 +21,7 @@ mutableImage.lockFocus()
 
 // Use NSFont and NSColor for text attributes
 let textAttributes: [NSAttributedString.Key: Any] = [
-    .font: NSFont.systemFont(ofSize: 22),
+    .font: NSFont.systemFont(ofSize: 12),
     .foregroundColor: NSColor.black
 ]
 
@@ -34,18 +34,22 @@ attributedText.draw(with: rect)
 
 mutableImage.unlockFocus()
 
-// Save the final image to the same Resources folder
-let outputURL = URL(fileURLWithPath: "Resources/output.png")
-if let data = mutableImage.tiffRepresentation {
+// Save the final image in JPEG format to the same Resources folder
+let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
+if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+    let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+    let jpegData = bitmapRep.representation(using: .jpeg, properties: [:])
+    
     do {
-        try data.write(to: outputURL)
+        try jpegData?.write(to: outputURL)
         print("Image saved to \(outputURL.path)")
     } catch {
         print("Error saving image: \(error)")
     }
 } else {
-    print("Error getting tiff representation of the image.")
+    print("Error getting CGImage representation of the image.")
 }
+
 
 
 
