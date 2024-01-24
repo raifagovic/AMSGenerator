@@ -13,6 +13,37 @@ guard let image = NSImage(contentsOfFile: imagePath) else {
 // Create a mutable copy of the image
 let mutableImage = image.copy() as! NSImage
 
+// Function to draw formatted date on the image
+func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
+    var currentX = coordinates.x
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd.MM.yyyy."
+
+    if let date = dateFormatter.date(from: dateInput) {
+        dateFormatter.dateFormat = "ddMMyy"
+        let formattedDate = dateFormatter.string(from: date)
+
+        for (index, digit) in formattedDate.enumerated() {
+            let spacing: CGFloat = (index == 2 || index == 4) ? 45.5 : 25.5
+
+            if index == 0 {
+                currentX += 0 // If the first digit, no initial spacing
+            } else {
+                currentX += spacing
+            }
+
+            let digitText = NSAttributedString(string: String(digit), attributes: attributes)
+            let digitSize = digitText.size()
+            let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
+            digitText.draw(with: digitRect)
+
+            // Move to the next position with the calculated spacing
+            currentX += digitSize.width
+        }
+    }
+}
+
 // Prompt user for "Ime i prezime:" and get input
 print("Ime i prezime:", terminator: " ")
 if let name = readLine() {
@@ -24,14 +55,12 @@ if let name = readLine() {
         if let identificationNumber = readLine(), identificationNumber.count == 13 {
             // Prompt user for "Datum:" and get input
             print("Datum (dd.mm.yyyy.):", terminator: " ")
-            if let dateInput = readLine(), dateInput.isValidDate {
+            if let dateInput = readLine() {
                 // Add user input as text to the image
                 let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
                 let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for address
                 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180) // Updated coordinates for identification number
                 let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
-                let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
-                let spacingBetweenSets: CGFloat = 25.5 // Decreased spacing between sets of digits
 
                 mutableImage.lockFocus()
 
@@ -53,7 +82,7 @@ if let name = readLine() {
                 let addressRect = NSRect(origin: addressCoordinates, size: addressSize)
                 addressText.draw(with: addressRect)
 
-                // Draw the identification number onto the image at the specified coordinates with increased spacing
+                // Draw the identification number onto the image at the specified coordinates
                 var currentX = identificationNumberCoordinates.x
 
                 for digit in identificationNumber {
@@ -62,30 +91,12 @@ if let name = readLine() {
                     let digitRect = NSRect(origin: NSPoint(x: currentX, y: identificationNumberCoordinates.y), size: digitSize)
                     digitText.draw(with: digitRect)
 
-                    // Move to the next position with increased spacing
-                    currentX += digitSize.width + spacingBetweenDigits
+                    // Move to the next position with spacingBetweenDigits
+                    currentX += digitSize.width + 25.5
                 }
 
                 // Draw the formatted date onto the image at the specified coordinates
-                var currentXDate = dateCoordinates.x
-
-                let formattedDate = formatDate(dateInput)
-
-                for (index, digit) in formattedDate.enumerated() {
-                    let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
-                    let digitSize = digitText.size()
-                    var additionalSpacing: CGFloat = 0.0
-
-                    if index == 0 || index == 3 {
-                        additionalSpacing = spacingBetweenSets
-                    }
-
-                    let digitRect = NSRect(origin: NSPoint(x: currentXDate + additionalSpacing, y: dateCoordinates.y), size: digitSize)
-                    digitText.draw(with: digitRect)
-
-                    // Move to the next position with increased spacing
-                    currentXDate += digitSize.width + spacingBetweenDigits + additionalSpacing
-                }
+                drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 
                 mutableImage.unlockFocus()
 
@@ -105,7 +116,7 @@ if let name = readLine() {
                     print("Error getting CGImage representation of the image.")
                 }
             } else {
-                print("Error: Please enter a valid date in the format dd.mm.yyyy.")
+                print("Error reading date input.")
             }
         } else {
             print("Error: Please enter a 13-digit identification number.")
@@ -117,25 +128,12 @@ if let name = readLine() {
     print("Error reading name input.")
 }
 
-// Function to format date input
-func formatDate(_ input: String) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd.MM.yyyy."
-    if let date = dateFormatter.date(from: input) {
-        dateFormatter.dateFormat = "ddMMyy"
-        return dateFormatter.string(from: date)
-    }
-    return ""
-}
 
-// Extension to check if the date is valid
-extension String {
-    var isValidDate: Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy."
-        return dateFormatter.date(from: self) != nil
-    }
-}
+
+
+
+
+
 
 
 
