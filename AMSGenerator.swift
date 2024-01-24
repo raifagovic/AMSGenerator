@@ -25,7 +25,7 @@ func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attrib
         let formattedDate = dateFormatter.string(from: date)
 
         for (index, digit) in formattedDate.enumerated() {
-            let spacing: CGFloat = (index == 2 || index == 4) ? 45.5 : 25.5
+            let spacing: CGFloat = (index == 2 || index == 4) ? 48 : 25.5
 
             if index == 0 {
                 currentX += 0 // If the first digit, no initial spacing
