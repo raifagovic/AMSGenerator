@@ -133,7 +133,7 @@ drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 // Draw the formatted month and year onto the image at the specified coordinates
 if let monthYear = monthYearFlag {
     let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-    let monthYearSpacing: CGFloat = 100
+    let monthYearSpacing: CGFloat = 50
 
     let textAttributes: [NSAttributedString.Key: Any] = [
         .font: NSFont.systemFont(ofSize: 27),
