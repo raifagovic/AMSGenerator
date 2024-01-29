@@ -52,6 +52,7 @@ var name: String = ""
 var address: String = ""
 var identificationNumber: String = ""
 var dateInput: String = ""
+var monthYearFlag: String? = nil
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -75,6 +76,11 @@ for (index, argument) in arguments.enumerated() {
         // Flag for date
         if index + 1 < arguments.count {
             dateInput = arguments[index + 1]
+        }
+    case "-m":
+        // Flag for month and year
+        if index + 1 < arguments.count {
+            monthYearFlag = arguments[index + 1]
         }
     default:
         break
@@ -123,6 +129,42 @@ for digit in identificationNumber {
 
 // Draw the formatted date onto the image at the specified coordinates
 drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
+
+// Draw the formatted month and year onto the image at the specified coordinates
+if let monthYear = monthYearFlag {
+    let monthYearCoordinates = NSPoint(x: 1010, y: 1200)
+    let monthYearSpacing: CGFloat = 100
+
+    let textAttributes: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: 27),
+        .foregroundColor: NSColor.black
+    ]
+
+    var currentX = monthYearCoordinates.x
+
+    // Parse the month and year input
+    let components = monthYear.components(separatedBy: ".")
+    if let month = components.first, let year = components.last {
+        let formattedMonthYear = String(format: "%02d %02d", Int(month) ?? 0, Int(year.suffix(2)) ?? 0)
+
+        for (index, digit) in formattedMonthYear.enumerated() {
+            let spacing: CGFloat = (index == 2) ? monthYearSpacing : 25.5
+
+            if index == 0 {
+                currentX += 0
+            } else {
+                currentX += spacing
+            }
+
+            let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
+            let digitSize = digitText.size()
+            let digitRect = NSRect(origin: NSPoint(x: currentX, y: monthYearCoordinates.y), size: digitSize)
+            digitText.draw(with: digitRect)
+
+            currentX += digitSize.width
+        }
+    }
+}
 
 mutableImage.unlockFocus()
 
