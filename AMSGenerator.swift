@@ -83,7 +83,7 @@ for (index, argument) in arguments.enumerated() {
             monthYearFlag = arguments[index + 1]
         }
     default:
-        break
+        return
     }
 }
 
@@ -143,26 +143,35 @@ if let monthYear = monthYearFlag {
     var currentX = monthYearCoordinates.x
 
     // Parse the month and year input
-    let components = monthYear.components(separatedBy: ".")
-    if let month = components.first, let year = components.last {
-        let formattedMonthYear = String(format: "%02d %02d", Int(month) ?? 0, Int(year.suffix(2)) ?? 0)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "M.yyyy."
 
-        for (index, digit) in formattedMonthYear.enumerated() {
-            let spacing: CGFloat = (index == 2) ? monthYearSpacing : 25.5
+    guard let date = dateFormatter.date(from: "1." + monthYear) else {
+        print("Invalid month and year format.")
+        return
+    }
 
-            if index == 0 {
-                currentX += 0
-            } else {
-                currentX += spacing
-            }
+    let components = Calendar.current.dateComponents([.month, .year], from: date)
+    let month = components.month ?? 0
+    let year = components.year ?? 0
 
-            let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
-            let digitSize = digitText.size()
-            let digitRect = NSRect(origin: NSPoint(x: currentX, y: monthYearCoordinates.y), size: digitSize)
-            digitText.draw(with: digitRect)
+    let formattedMonthYear = String(format: "%02d %02d", month, year % 100)
 
-            currentX += digitSize.width
+    for (index, digit) in formattedMonthYear.enumerated() {
+        let spacing: CGFloat = (index == 2) ? monthYearSpacing : 25.5
+
+        if index == 0 {
+            currentX += 0
+        } else {
+            currentX += spacing
         }
+
+        let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
+        let digitSize = digitText.size()
+        let digitRect = NSRect(origin: NSPoint(x: currentX, y: monthYearCoordinates.y), size: digitSize)
+        digitText.draw(with: digitRect)
+
+        currentX += digitSize.width
     }
 }
 
@@ -183,39 +192,3 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
