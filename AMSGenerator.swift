@@ -133,7 +133,7 @@ let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for ad
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180) // Updated coordinates for identification number
 let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-let payerNameCoordinates = NSPoint(x: 120, y: 1000)  // Adjusted coordinates for payer name
+let payerNameCoordinates = NSPoint(x: 120, y: 925)  // Adjusted coordinates for payer name
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
