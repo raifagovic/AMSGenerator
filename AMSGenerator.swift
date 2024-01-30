@@ -90,6 +90,7 @@ var monthYearFlag: String = ""
 var payerName: String = ""  // New flag for payer name
 var payerAddress: String = ""  // New flag for payer address
 var payerCountry: String = ""  // New flag for payer country
+var paymentAmount: String = ""  // New flag for payment amount
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -134,6 +135,11 @@ for (index, argument) in arguments.enumerated() {
         if index + 1 < arguments.count {
             payerCountry = arguments[index + 1]
         }
+    case "-amount":
+        // Flag for payment amount
+        if index + 1 < arguments.count {
+            paymentAmount = arguments[index + 1]
+        }
     default:
         break
     }
@@ -148,6 +154,7 @@ let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 let payerNameCoordinates = NSPoint(x: 120, y: 925)  // Adjusted coordinates for payer name
 let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates for payer address
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)  // Adjusted coordinates for payer country
+let paymentAmountCoordinates = NSPoint(x: 120, y: 700)  // Adjusted coordinates for payment amount
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
@@ -206,6 +213,12 @@ let payerCountryText = NSAttributedString(string: payerCountry, attributes: text
 let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
+
+// Draw the payment amount onto the image at the specified coordinates
+let paymentAmountText = NSAttributedString(string: paymentAmount, attributes: textAttributes)
+let paymentAmountSize = paymentAmountText.size()
+let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
+paymentAmountText.draw(with: paymentAmountRect)
 
 mutableImage.unlockFocus()
 
