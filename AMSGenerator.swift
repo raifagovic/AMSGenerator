@@ -87,6 +87,7 @@ var address: String = ""
 var identificationNumber: String = ""
 var dateInput: String = ""
 var monthYearFlag: String = ""
+var payerName: String = ""  // New flag for payer name
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -111,17 +112,16 @@ for (index, argument) in arguments.enumerated() {
         if index + 1 < arguments.count {
             dateInput = arguments[index + 1]
         }
-//    case "-m":
-//        // Flag for month and year
-//        if index + 1 < arguments.count {
-//            monthYearFlag = arguments[index + 1]
-//        }
     case "-m":
         // Flag for month and year
         if index + 1 < arguments.count {
             monthYearFlag = arguments[index + 1].trimmingCharacters(in: .punctuationCharacters)
         }
-
+    case "-p":
+        // Flag for payer name
+        if index + 1 < arguments.count {
+            payerName = arguments[index + 1]
+        }
     default:
         break
     }
@@ -133,6 +133,7 @@ let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for ad
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180) // Updated coordinates for identification number
 let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
+let payerNameCoordinates = NSPoint(x: 120, y: 1000)  // Adjusted coordinates for payer name
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
@@ -174,6 +175,12 @@ drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 // Draw the formatted month and year onto the image at the specified coordinates
 drawFormattedMonthYear(monthYearFlag, at: monthYearCoordinates, with: textAttributes)
 
+// Draw the payer name onto the image at the specified coordinates
+let payerNameText = NSAttributedString(string: payerName, attributes: textAttributes)
+let payerNameSize = payerNameText.size()
+let payerNameRect = NSRect(origin: payerNameCoordinates, size: payerNameSize)
+payerNameText.draw(with: payerNameRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
@@ -191,3 +198,4 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
+
