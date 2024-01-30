@@ -44,6 +44,40 @@ func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attrib
     }
 }
 
+// Function to draw formatted month and year on the image
+func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
+    var currentX = coordinates.x
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM.yyyy."
+
+    // Parse the month and year input
+    let components = monthYearInput.components(separatedBy: ".")
+    if components.count == 2, let month = Int(components[0]), let year = Int(components[1]) {
+        let formattedMonthYear = String(format: "%02d %02d", month, year % 100)
+
+        for (index, digit) in formattedMonthYear.enumerated() {
+            let spacing: CGFloat = (index == 2) ? 50 : 25.5
+
+            if index == 0 {
+                currentX += 0
+            } else {
+                currentX += spacing
+            }
+
+            let digitText = NSAttributedString(string: String(digit), attributes: attributes)
+            let digitSize = digitText.size()
+            let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
+            digitText.draw(with: digitRect)
+
+            currentX += digitSize.width
+        }
+    } else {
+        print("Invalid month and year format.")
+        exit(1)
+    }
+}
+
 // Command-line arguments
 let arguments = CommandLine.arguments
 
@@ -52,7 +86,7 @@ var name: String = ""
 var address: String = ""
 var identificationNumber: String = ""
 var dateInput: String = ""
-var monthYearFlag: String? = nil
+var monthYearFlag: String = ""
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -77,13 +111,19 @@ for (index, argument) in arguments.enumerated() {
         if index + 1 < arguments.count {
             dateInput = arguments[index + 1]
         }
+//    case "-m":
+//        // Flag for month and year
+//        if index + 1 < arguments.count {
+//            monthYearFlag = arguments[index + 1]
+//        }
     case "-m":
         // Flag for month and year
         if index + 1 < arguments.count {
-            monthYearFlag = arguments[index + 1]
+            monthYearFlag = arguments[index + 1].trimmingCharacters(in: .punctuationCharacters)
         }
+
     default:
-        return
+        break
     }
 }
 
@@ -92,6 +132,7 @@ let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
 let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for address
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180) // Updated coordinates for identification number
 let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
+let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
@@ -131,49 +172,7 @@ for digit in identificationNumber {
 drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 
 // Draw the formatted month and year onto the image at the specified coordinates
-if let monthYear = monthYearFlag {
-    let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-    let monthYearSpacing: CGFloat = 50
-
-    let textAttributes: [NSAttributedString.Key: Any] = [
-        .font: NSFont.systemFont(ofSize: 27),
-        .foregroundColor: NSColor.black
-    ]
-
-    var currentX = monthYearCoordinates.x
-
-    // Parse the month and year input
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "M.yyyy."
-
-    guard let date = dateFormatter.date(from: "1." + monthYear) else {
-        print("Invalid month and year format.")
-        return
-    }
-
-    let components = Calendar.current.dateComponents([.month, .year], from: date)
-    let month = components.month ?? 0
-    let year = components.year ?? 0
-
-    let formattedMonthYear = String(format: "%02d %02d", month, year % 100)
-
-    for (index, digit) in formattedMonthYear.enumerated() {
-        let spacing: CGFloat = (index == 2) ? monthYearSpacing : 25.5
-
-        if index == 0 {
-            currentX += 0
-        } else {
-            currentX += spacing
-        }
-
-        let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
-        let digitSize = digitText.size()
-        let digitRect = NSRect(origin: NSPoint(x: currentX, y: monthYearCoordinates.y), size: digitSize)
-        digitText.draw(with: digitRect)
-
-        currentX += digitSize.width
-    }
-}
+drawFormattedMonthYear(monthYearFlag, at: monthYearCoordinates, with: textAttributes)
 
 mutableImage.unlockFocus()
 
