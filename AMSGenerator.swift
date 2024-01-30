@@ -89,6 +89,7 @@ var dateInput: String = ""
 var monthYearFlag: String = ""
 var payerName: String = ""  // New flag for payer name
 var payerAddress: String = ""  // New flag for payer address
+var payerCountry: String = ""  // New flag for payer country
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -128,6 +129,11 @@ for (index, argument) in arguments.enumerated() {
         if index + 1 < arguments.count {
             payerAddress = arguments[index + 1]
         }
+    case "-pc":
+        // Flag for payer country
+        if index + 1 < arguments.count {
+            payerCountry = arguments[index + 1]
+        }
     default:
         break
     }
@@ -141,6 +147,7 @@ let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 let payerNameCoordinates = NSPoint(x: 120, y: 925)  // Adjusted coordinates for payer name
 let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates for payer address
+let payerCountryCoordinates = NSPoint(x: 1770, y: 925)  // Adjusted coordinates for payer country
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
@@ -194,6 +201,12 @@ let payerAddressSize = payerAddressText.size()
 let payerAddressRect = NSRect(origin: payerAddressCoordinates, size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
 
+// Draw the payer country onto the image at the specified coordinates
+let payerCountryText = NSAttributedString(string: payerCountry, attributes: textAttributes)
+let payerCountrySize = payerCountryText.size()
+let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountrySize)
+payerCountryText.draw(with: payerCountryRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
@@ -211,4 +224,3 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
-
