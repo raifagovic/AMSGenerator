@@ -90,7 +90,7 @@ var monthYearFlag: String = ""
 var payerName: String = ""  // New flag for payer name
 var payerAddress: String = ""  // New flag for payer address
 var payerCountry: String = ""  // New flag for payer country
-var paymentAmount: String = ""  // New flag for payment amount
+var paymentAmount: Double = 0.0  // Updated flag for payment amount
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -137,8 +137,11 @@ for (index, argument) in arguments.enumerated() {
         }
     case "-amount":
         // Flag for payment amount
-        if index + 1 < arguments.count {
-            paymentAmount = arguments[index + 1]
+        if index + 1 < arguments.count, let amount = Double(arguments[index + 1]) {
+            paymentAmount = amount
+        } else {
+            print("Invalid payment amount format.")
+            exit(1)
         }
     default:
         break
@@ -215,7 +218,7 @@ let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountr
 payerCountryText.draw(with: payerCountryRect)
 
 // Draw the payment amount onto the image at the specified coordinates
-let paymentAmountText = NSAttributedString(string: paymentAmount, attributes: textAttributes)
+let paymentAmountText = NSAttributedString(string: String(paymentAmount), attributes: textAttributes)
 let paymentAmountSize = paymentAmountText.size()
 let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
 paymentAmountText.draw(with: paymentAmountRect)
