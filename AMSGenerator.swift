@@ -157,9 +157,6 @@ for (index, argument) in arguments.enumerated() {
     }
 }
 
-// Print deduction value (for testing)
-print("Deduction value: \(deduction)")
-
 // Add user input as text to the image
 let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
 let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for address
@@ -257,6 +254,3 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
-
-// Print the saved deduction value (for testing)
-print("Saved Deduction value: \(savedDeduction)")
