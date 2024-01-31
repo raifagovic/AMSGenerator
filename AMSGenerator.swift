@@ -87,11 +87,11 @@ var address: String = ""
 var identificationNumber: String = ""
 var dateInput: String = ""
 var monthYearFlag: String = ""
-var payerName: String = ""  // New flag for payer name
-var payerAddress: String = ""  // New flag for payer address
-var payerCountry: String = ""  // New flag for payer country
-var paymentAmount: Double = 0.0  // Updated flag for payment amount
-var deduction: Int = 0  // New flag for deduction
+var payerName: String = ""
+var payerAddress: String = ""
+var payerCountry: String = ""
+var paymentAmount: Double = 0.0
+var deduction: Int = 0
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
