@@ -91,6 +91,7 @@ var payerName: String = ""  // New flag for payer name
 var payerAddress: String = ""  // New flag for payer address
 var payerCountry: String = ""  // New flag for payer country
 var paymentAmount: Double = 0.0  // Updated flag for payment amount
+var deduction: Int = 0  // New flag for deduction
 
 // Parse command-line arguments
 for (index, argument) in arguments.enumerated() {
@@ -143,10 +144,21 @@ for (index, argument) in arguments.enumerated() {
             print("Invalid payment amount format.")
             exit(1)
         }
+    case "-deduction":
+        // Flag for deduction
+        if index + 1 < arguments.count, let deductionValue = Int(arguments[index + 1]) {
+            deduction = deductionValue
+        } else {
+            print("Invalid deduction format.")
+            exit(1)
+        }
     default:
         break
     }
 }
+
+// Print deduction value (for testing)
+print("Deduction value: \(deduction)")
 
 // Add user input as text to the image
 let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
@@ -158,7 +170,12 @@ let payerNameCoordinates = NSPoint(x: 120, y: 925)  // Adjusted coordinates for 
 let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates for payer address
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)  // Adjusted coordinates for payer country
 let paymentAmountCoordinates = NSPoint(x: 280, y: 690)  // Adjusted coordinates for payment amount
+let deductionCoordinates = NSPoint(x: 0, y: 0)  // Placeholder coordinates for deduction
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
+
+// Save the deduction value for future use
+// (For now, it will not be drawn on the image)
+let savedDeduction = deduction
 
 mutableImage.lockFocus()
 
@@ -240,3 +257,6 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
+
+// Print the saved deduction value (for testing)
+print("Saved Deduction value: \(savedDeduction)")
