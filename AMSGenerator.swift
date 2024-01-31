@@ -174,7 +174,7 @@ let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates f
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)  // Adjusted coordinates for payer country
 let paymentAmountCoordinates = NSPoint(x: 280, y: 690)  // Adjusted coordinates for payment amount
 let deductionCoordinates = NSPoint(x: 0, y: 0)  // Placeholder coordinates for deduction
-let healthInsuranceCoordinates = NSPoint(x: 400, y: 690)  // Adjusted coordinates for health insurance
+let healthInsuranceCoordinates = NSPoint(x: 600, y: 690)  // Adjusted coordinates for health insurance
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
 
 mutableImage.lockFocus()
