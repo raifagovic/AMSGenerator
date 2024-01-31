@@ -157,6 +157,12 @@ for (index, argument) in arguments.enumerated() {
     }
 }
 
+// Calculate deduction value
+let calculatedDeduction = Double(deduction) / 100 * paymentAmount
+
+// Calculate health insurance value (4% of the final amount)
+let healthInsurance = 0.04 * (paymentAmount - calculatedDeduction)
+
 // Add user input as text to the image
 let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
 let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for address
@@ -168,11 +174,8 @@ let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates f
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)  // Adjusted coordinates for payer country
 let paymentAmountCoordinates = NSPoint(x: 280, y: 690)  // Adjusted coordinates for payment amount
 let deductionCoordinates = NSPoint(x: 0, y: 0)  // Placeholder coordinates for deduction
+let healthInsuranceCoordinates = NSPoint(x: 400, y: 690)  // Adjusted coordinates for health insurance
 let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
-
-// Save the deduction value for future use
-// (For now, it will not be drawn on the image)
-let savedDeduction = deduction
 
 mutableImage.lockFocus()
 
@@ -236,6 +239,12 @@ let paymentAmountText = NSAttributedString(string: String(paymentAmount), attrib
 let paymentAmountSize = paymentAmountText.size()
 let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
 paymentAmountText.draw(with: paymentAmountRect)
+
+// Draw the health insurance value onto the image at the specified coordinates
+let healthInsuranceText = NSAttributedString(string: String(healthInsurance), attributes: textAttributes)
+let healthInsuranceSize = healthInsuranceText.size()
+let healthInsuranceRect = NSRect(origin: healthInsuranceCoordinates, size: healthInsuranceSize)
+healthInsuranceText.draw(with: healthInsuranceRect)
 
 mutableImage.unlockFocus()
 
