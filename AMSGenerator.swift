@@ -169,6 +169,9 @@ let healthInsurance = 0.04 * amountOfIncome
 // Calculate taxBase
 let taxBase = amountOfIncome - healthInsurance
 
+// Calculate taxAmount
+let taxAmount = 0.1 * taxBase
+
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
 let nameCoordinates = NSPoint(x: 120, y: 1170)
