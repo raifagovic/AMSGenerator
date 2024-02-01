@@ -166,6 +166,9 @@ let amountOfIncome = paymentAmount - calculatedDeduction
 // Calculate health insurance value (4% of the amountOfIncome)
 let healthInsurance = 0.04 * amountOfIncome
 
+// Calculate taxBase
+let taxBase = amountOfIncome - healthInsurance
+
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
 let nameCoordinates = NSPoint(x: 120, y: 1170)
