@@ -138,10 +138,10 @@ for (index, argument) in arguments.enumerated() {
         }
     case "-amount":
         // Flag for payment amount
-        if index + 1 < arguments.count, let amount = Double(arguments[index + 1]) {
-            paymentAmount = amount
+        if index + 1 < arguments.count, let amountValue = Double(arguments[index + 1]) {
+            paymentAmount = amountValue - Double(deduction)
         } else {
-            print("Invalid payment amount format.")
+            print("Invalid amount format.")
             exit(1)
         }
     case "-deduction":
@@ -160,16 +160,20 @@ for (index, argument) in arguments.enumerated() {
 // Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
 
-// Calculate health insurance value (4% of the final amount)
-let healthInsurance = 0.04 * (paymentAmount - calculatedDeduction)
+// Calculate amount of income (amount - calculatedDeduction)
+let amountOfIncome = paymentAmount - calculatedDeduction
+
+// Calculate health insurance value (4% of the amountOfIncome)
+let healthInsurance = 0.04 * amountOfIncome
 
 // Add user input as text to the image
+// (Use amountOfIncome instead of paymentAmount for drawing)
 let nameCoordinates = NSPoint(x: 120, y: 1170)
 let addressCoordinates = NSPoint(x: 120, y: 1090)
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
 let dateCoordinates = NSPoint(x: 1100, y: 1090)
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-let payerNameCoordinates = NSPoint(x: 120, y: 925)l
+let payerNameCoordinates = NSPoint(x: 120, y: 925)
 let payerAddressCoordinates = NSPoint(x: 945, y: 925)
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)
 let paymentAmountCoordinates = NSPoint(x: 280, y: 690)
@@ -235,7 +239,7 @@ let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountr
 payerCountryText.draw(with: payerCountryRect)
 
 // Draw the payment amount onto the image at the specified coordinates
-let paymentAmountText = NSAttributedString(string: String(paymentAmount), attributes: textAttributes)
+let paymentAmountText = NSAttributedString(string: String(amountOfIncome), attributes: textAttributes)
 let paymentAmountSize = paymentAmountText.size()
 let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
 paymentAmountText.draw(with: paymentAmountRect)
