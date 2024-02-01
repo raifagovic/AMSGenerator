@@ -164,18 +164,18 @@ let calculatedDeduction = Double(deduction) / 100 * paymentAmount
 let healthInsurance = 0.04 * (paymentAmount - calculatedDeduction)
 
 // Add user input as text to the image
-let nameCoordinates = NSPoint(x: 120, y: 1170) // Adjusted coordinates for name
-let addressCoordinates = NSPoint(x: 120, y: 1090) // Adjusted coordinates for address
-let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180) // Updated coordinates for identification number
-let dateCoordinates = NSPoint(x: 1100, y: 1090) // Updated coordinates for date
+let nameCoordinates = NSPoint(x: 120, y: 1170)
+let addressCoordinates = NSPoint(x: 120, y: 1090)
+let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
+let dateCoordinates = NSPoint(x: 1100, y: 1090)
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-let payerNameCoordinates = NSPoint(x: 120, y: 925)  // Adjusted coordinates for payer name
-let payerAddressCoordinates = NSPoint(x: 945, y: 925)  // Adjusted coordinates for payer address
-let payerCountryCoordinates = NSPoint(x: 1780, y: 925)  // Adjusted coordinates for payer country
-let paymentAmountCoordinates = NSPoint(x: 280, y: 690)  // Adjusted coordinates for payment amount
-let deductionCoordinates = NSPoint(x: 0, y: 0)  // Placeholder coordinates for deduction
-let healthInsuranceCoordinates = NSPoint(x: 710, y: 690)  // Adjusted coordinates for health insurance
-let spacingBetweenDigits: CGFloat = 25.5 // Increased spacing between digits
+let payerNameCoordinates = NSPoint(x: 120, y: 925)l
+let payerAddressCoordinates = NSPoint(x: 945, y: 925)
+let payerCountryCoordinates = NSPoint(x: 1780, y: 925)
+let paymentAmountCoordinates = NSPoint(x: 280, y: 690)
+let deductionCoordinates = NSPoint(x: 0, y: 0)
+let healthInsuranceCoordinates = NSPoint(x: 710, y: 690)
+let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
 
