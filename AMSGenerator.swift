@@ -182,6 +182,7 @@ let payerCountryCoordinates = NSPoint(x: 1780, y: 925)
 let paymentAmountCoordinates = NSPoint(x: 280, y: 690)
 let deductionCoordinates = NSPoint(x: 0, y: 0)
 let healthInsuranceCoordinates = NSPoint(x: 710, y: 690)
+let taxBaseCoordinates = NSPoint(x: 900, y: 690)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
@@ -252,6 +253,12 @@ let healthInsuranceText = NSAttributedString(string: String(healthInsurance), at
 let healthInsuranceSize = healthInsuranceText.size()
 let healthInsuranceRect = NSRect(origin: healthInsuranceCoordinates, size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
+
+// Draw the taxBase onto the image at the specified coordinates
+let taxBaseText = NSAttributedString(string: String(taxBase), attributes: textAttributes)
+let taxBaseSize = taxBaseText.size()
+let taxBaseRect = NSRect(origin: taxBaseCoordinates, size: taxBaseSize)
+taxBaseText.draw(with: taxBaseRect)
 
 mutableImage.unlockFocus()
 
