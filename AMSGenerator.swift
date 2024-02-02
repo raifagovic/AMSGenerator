@@ -186,7 +186,7 @@ let paymentAmountCoordinates = NSPoint(x: 280, y: 690)
 let deductionCoordinates = NSPoint(x: 0, y: 0)
 let healthInsuranceCoordinates = NSPoint(x: 710, y: 690)
 let taxBaseCoordinates = NSPoint(x: 1030, y: 690)
-let taxAmountCoordinates = NSPoint(x: 1200, y: 690)
+let taxAmountCoordinates = NSPoint(x: 1365, y: 690)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
