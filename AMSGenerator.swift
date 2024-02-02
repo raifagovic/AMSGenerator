@@ -258,8 +258,11 @@ let healthInsuranceSize = healthInsuranceText.size()
 let healthInsuranceRect = NSRect(origin: healthInsuranceCoordinates, size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
 
+// Format taxBase to display with comma as the decimal separator
+let formattedTaxBase = String(format: "%.2f", taxBase).replacingOccurrences(of: ".", with: ",")
+
 // Draw the taxBase onto the image at the specified coordinates
-let taxBaseText = NSAttributedString(string: String(taxBase), attributes: textAttributes)
+let taxBaseText = NSAttributedString(string: formattedTaxBase, attributes: textAttributes)
 let taxBaseSize = taxBaseText.size()
 let taxBaseRect = NSRect(origin: taxBaseCoordinates, size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
