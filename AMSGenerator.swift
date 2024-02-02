@@ -252,8 +252,11 @@ let paymentAmountSize = paymentAmountText.size()
 let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
 paymentAmountText.draw(with: paymentAmountRect)
 
+// Format healthInsurance to display with comma as the decimal separator
+let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacingOccurrences(of: ".", with: ",")
+
 // Draw the health insurance value onto the image at the specified coordinates
-let healthInsuranceText = NSAttributedString(string: String(healthInsurance), attributes: textAttributes)
+let healthInsuranceText = NSAttributedString(string: formattedHealthInsurance, attributes: textAttributes)
 let healthInsuranceSize = healthInsuranceText.size()
 let healthInsuranceRect = NSRect(origin: healthInsuranceCoordinates, size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
