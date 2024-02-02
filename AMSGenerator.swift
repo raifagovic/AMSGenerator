@@ -263,6 +263,12 @@ let taxBaseSize = taxBaseText.size()
 let taxBaseRect = NSRect(origin: taxBaseCoordinates, size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
 
+// Draw the tax amount onto the image at the specified coordinates
+let taxAmountText = NSAttributedString(string: String(taxAmount), attributes: textAttributes)
+let taxAmountSize = taxAmountText.size()
+let taxAmountRect = NSRect(origin: NSPoint(x: 1200, y: 690), size: taxAmountSize)
+taxAmountText.draw(with: taxAmountRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
