@@ -246,8 +246,11 @@ let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
 
+// Format amountOfIncome to display with comma as the decimal separator
+let formattedAmountOfIncome = String(format: "%.2f", amountOfIncome).replacingOccurrences(of: ".", with: ",")
+
 // Draw the payment amount onto the image at the specified coordinates
-let paymentAmountText = NSAttributedString(string: String(amountOfIncome), attributes: textAttributes)
+let paymentAmountText = NSAttributedString(string: formattedAmountOfIncome, attributes: textAttributes)
 let paymentAmountSize = paymentAmountText.size()
 let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
 paymentAmountText.draw(with: paymentAmountRect)
