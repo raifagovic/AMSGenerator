@@ -264,8 +264,8 @@ let taxBaseSize = taxBaseText.size()
 let taxBaseRect = NSRect(origin: taxBaseCoordinates, size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
 
-// Format taxAmount to display only two decimal places
-let formattedTaxAmount = String(format: "%.2f", taxAmount)
+// Format taxAmount to display with comma as the decimal separator
+let formattedTaxAmount = String(format: "%.2f", taxAmount).replacingOccurrences(of: ".", with: ",")
 
 // Draw the tax amount onto the image at the specified coordinates
 let taxAmountText = NSAttributedString(string: formattedTaxAmount, attributes: textAttributes)
