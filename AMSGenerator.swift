@@ -164,13 +164,13 @@ let calculatedDeduction = Double(deduction) / 100 * paymentAmount
 let amountOfIncome = paymentAmount - calculatedDeduction
 
 // Calculate health insurance value (4% of the amountOfIncome)
-let healthInsurance = 0.04 * amountOfIncome
+let healthInsurance = amountOfIncome * 0.04
 
 // Calculate taxBase
 let taxBase = amountOfIncome - healthInsurance
 
 // Calculate taxAmount
-let taxAmount = 0.1 * taxBase
+let taxAmount = taxBase * 0.1
 
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
