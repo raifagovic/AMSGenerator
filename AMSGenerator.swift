@@ -182,7 +182,7 @@ let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 let payerNameCoordinates = NSPoint(x: 120, y: 925)
 let payerAddressCoordinates = NSPoint(x: 945, y: 925)
 let payerCountryCoordinates = NSPoint(x: 1780, y: 925)
-let paymentAmountCoordinates = NSPoint(x: 280, y: 690)
+let amountOfIncomeCoordinates = NSPoint(x: 280, y: 690)
 let deductionCoordinates = NSPoint(x: 0, y: 0)
 let healthInsuranceCoordinates = NSPoint(x: 710, y: 690)
 let taxBaseCoordinates = NSPoint(x: 1030, y: 690)
@@ -250,10 +250,10 @@ payerCountryText.draw(with: payerCountryRect)
 let formattedAmountOfIncome = String(format: "%.2f", amountOfIncome).replacingOccurrences(of: ".", with: ",")
 
 // Draw the payment amount onto the image at the specified coordinates
-let paymentAmountText = NSAttributedString(string: formattedAmountOfIncome, attributes: textAttributes)
-let paymentAmountSize = paymentAmountText.size()
-let paymentAmountRect = NSRect(origin: paymentAmountCoordinates, size: paymentAmountSize)
-paymentAmountText.draw(with: paymentAmountRect)
+let amountOfIncomeText = NSAttributedString(string: formattedAmountOfIncome, attributes: textAttributes)
+let amountOfIncomeSize = amountOfIncomeText.size()
+let amountOfIncomeRect = NSRect(origin: amountOfIncomeCoordinates, size: amountOfIncomeSize)
+amountOfIncomeText.draw(with: amountOfIncomeRect)
 
 // Format healthInsurance to display with comma as the decimal separator
 let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacingOccurrences(of: ".", with: ",")
