@@ -298,6 +298,12 @@ let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
 let taxCreditPaidAbroadRect = NSRect(origin: taxCreditPaidAbroadCoordinates, size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
 
+// Draw the tax difference for payment onto the image at the specified coordinates
+let taxDifferenceForPaymentText = NSAttributedString(string: taxDifferenceForPayment, attributes: textAttributes)
+let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
+let taxDifferenceForPaymentRect = NSRect(origin: taxDifferenceForPaymentCoordinates, size: taxDifferenceForPaymentSize)
+taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
