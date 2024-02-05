@@ -289,7 +289,7 @@ taxAmountText.draw(with: taxAmountRect)
 let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
 
 // Draw the tax credit paid abroad onto the image at the specified coordinates
-let taxCreditPaidAbroadText = NSAttributedString(string: taxCreditPaidAbroad, attributes: textAttributes)
+let taxCreditPaidAbroadText = NSAttributedString(string: formattedTaxCreditPaidAbroad, attributes: textAttributes)
 let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
 let taxCreditPaidAbroadRect = NSRect(origin: taxCreditPaidAbroadCoordinates, size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
