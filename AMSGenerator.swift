@@ -285,7 +285,8 @@ let taxAmountSize = taxAmountText.size()
 let taxAmountRect = NSRect(origin: taxAmountCoordinates, size: taxAmountSize)
 taxAmountText.draw(with: taxAmountRect)
 
-
+// Format formattedTaxCreditPaidAbroad to display with comma as the decimal separator
+let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
 
 // Draw the tax credit paid abroad onto the image at the specified coordinates
 let taxCreditPaidAbroadText = NSAttributedString(string: taxCreditPaidAbroad, attributes: textAttributes)
