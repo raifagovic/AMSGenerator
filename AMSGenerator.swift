@@ -172,6 +172,8 @@ let taxBase = amountOfIncome - healthInsurance
 // Calculate taxAmount
 let taxAmount = taxBase * 0.1
 
+let taxCreditPaidAbroad: Int = 0
+
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
 let nameCoordinates = NSPoint(x: 120, y: 1170)
@@ -187,6 +189,7 @@ let deductionCoordinates = NSPoint(x: 0, y: 0)
 let healthInsuranceCoordinates = NSPoint(x: 700, y: 690)
 let taxBaseCoordinates = NSPoint(x: 1020, y: 690)
 let taxAmountCoordinates = NSPoint(x: 1360, y: 690)
+let taxCreditPaidAbroadCoordinates = NSPoint(x: 1500, y: 690)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
@@ -281,6 +284,7 @@ let taxAmountText = NSAttributedString(string: formattedTaxAmount, attributes: t
 let taxAmountSize = taxAmountText.size()
 let taxAmountRect = NSRect(origin: taxAmountCoordinates, size: taxAmountSize)
 taxAmountText.draw(with: taxAmountRect)
+
 
 mutableImage.unlockFocus()
 
