@@ -174,6 +174,9 @@ let taxAmount = taxBase * 0.1
 
 let taxCreditPaidAbroad: Int = 0
 
+// Calculate taxDifferenceForPayment
+let taxDifferenceForPayment = taxAmount - Double(taxCreditPaidAbroad)!
+
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
 let nameCoordinates = NSPoint(x: 120, y: 1170)
