@@ -298,8 +298,11 @@ let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
 let taxCreditPaidAbroadRect = NSRect(origin: taxCreditPaidAbroadCoordinates, size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
 
+// Format taxDifferenceForPayment to display with comma as the decimal separator
+let formattedTaxDifferenceForPayment = String(format: "%.2f", taxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
+
 // Draw the tax difference for payment onto the image at the specified coordinates
-let taxDifferenceForPaymentText = NSAttributedString(string: taxDifferenceForPayment, attributes: textAttributes)
+let taxDifferenceForPaymentText = NSAttributedString(string: formattedTaxDifferenceForPayment, attributes: textAttributes)
 let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
 let taxDifferenceForPaymentRect = NSRect(origin: taxDifferenceForPaymentCoordinates, size: taxDifferenceForPaymentSize)
 taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
