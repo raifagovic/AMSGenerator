@@ -157,6 +157,14 @@ for (index, argument) in arguments.enumerated() {
     }
 }
 
+// Default to today's date if -d flag is not provided
+if dateInput.isEmpty {
+    let currentDate = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd.MM.yyyy."
+    dateInput = dateFormatter.string(from: currentDate)
+}
+
 // Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
 
