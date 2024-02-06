@@ -25,7 +25,7 @@ func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attrib
         let formattedDate = dateFormatter.string(from: date)
 
         for (index, digit) in formattedDate.enumerated() {
-            let spacing: CGFloat = (index == 2 || index == 4) ? 48 : 25.5
+            let spacing: CGFloat = (index == 2 || index == 4) ? 45 : 25.5
 
             if index == 0 {
                 currentX += 0 // If the first digit, no initial spacing
@@ -72,10 +72,7 @@ func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, w
 
             currentX += digitSize.width
         }
-    } else {
-        print("Invalid month and year format.")
-        exit(1)
-    }
+    } 
 }
 
 // Command-line arguments
@@ -163,6 +160,14 @@ if dateInput.isEmpty {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd.MM.yyyy."
     dateInput = dateFormatter.string(from: currentDate)
+}
+
+// Default value for monthYearFlag if not provided
+if monthYearFlag.isEmpty {
+    let currentDate = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM.yyyy."
+    monthYearFlag = dateFormatter.string(from: currentDate)
 }
 
 // Calculate deduction value
