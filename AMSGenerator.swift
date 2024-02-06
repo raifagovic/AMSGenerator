@@ -221,7 +221,7 @@ let taxBaseCoordinates = NSPoint(x: 1020, y: 690)
 let taxAmountCoordinates = NSPoint(x: 1360, y: 690)
 let taxCreditPaidAbroadCoordinates = NSPoint(x: 1710, y: 690)
 let taxDifferenceForPaymentCoordinates = NSPoint(x: 2025, y: 690)
-let normalDateCoordinates = NSPoint(x: 2000, y: 200)
+let normalDateCoordinates = NSPoint(x: 1920, y: 135)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
