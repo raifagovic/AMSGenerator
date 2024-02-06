@@ -57,7 +57,7 @@ func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, w
         let formattedMonthYear = String(format: "%02d %02d", month, year % 100)
 
         for (index, digit) in formattedMonthYear.enumerated() {
-            let spacing: CGFloat = (index == 2) ? 50 : 25.5
+            let spacing: CGFloat = (index == 2) ? 52 : 25.5
 
             if index == 0 {
                 currentX += 0
@@ -72,7 +72,7 @@ func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, w
 
             currentX += digitSize.width
         }
-    } 
+    }
 }
 
 // Command-line arguments
