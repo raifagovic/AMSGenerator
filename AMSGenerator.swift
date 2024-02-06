@@ -75,6 +75,20 @@ func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, w
     }
 }
 
+func drawFormattedDateNormal(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd.MM.yyyy."
+
+    if let date = dateFormatter.date(from: dateInput) {
+        let formattedDate = dateFormatter.string(from: date)
+
+        let dateText = NSAttributedString(string: formattedDate, attributes: attributes)
+        let dateSize = dateText.size()
+        let dateRect = NSRect(origin: coordinates, size: dateSize)
+        dateText.draw(with: dateRect)
+    }
+}
+
 // Command-line arguments
 let arguments = CommandLine.arguments
 
@@ -207,6 +221,7 @@ let taxBaseCoordinates = NSPoint(x: 1020, y: 690)
 let taxAmountCoordinates = NSPoint(x: 1360, y: 690)
 let taxCreditPaidAbroadCoordinates = NSPoint(x: 1710, y: 690)
 let taxDifferenceForPaymentCoordinates = NSPoint(x: 2025, y: 690)
+let normalDateCoordinates = NSPoint(x: 2000, y: 200)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
@@ -247,6 +262,9 @@ drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 
 // Draw the formatted month and year onto the image at the specified coordinates
 drawFormattedMonthYear(monthYearFlag, at: monthYearCoordinates, with: textAttributes)
+
+// Draw the normal formatted date onto the image at the specified coordinates
+drawFormattedDateNormal(dateInput, at: normalDateCoordinates, with: textAttributes)
 
 // Draw the payer name onto the image at the specified coordinates
 let payerNameText = NSAttributedString(string: payerName, attributes: textAttributes)
