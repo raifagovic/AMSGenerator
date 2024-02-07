@@ -1,5 +1,6 @@
 import Foundation
 import Cocoa
+import TaxCalculation
 
 // Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"
@@ -186,23 +187,30 @@ if monthYearFlag.isEmpty {
 
 // Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
+totalCalculatedDeduction += calculatedDeduction
 
 // Calculate amount of income (amount - calculatedDeduction)
 let amountOfIncome = paymentAmount - calculatedDeduction
+totalAmountOfIncome += amountOfIncome
 
 // Calculate health insurance value (4% of the amountOfIncome)
 let healthInsurance = amountOfIncome * 0.04
+totalHealthInsurance += healthInsurance
 
 // Calculate taxBase
 let taxBase = amountOfIncome - healthInsurance
+totalTaxBase += taxBase
 
 // Calculate taxAmount
 let taxAmount = taxBase * 0.1
+totalTaxAmount += taxAmount
 
 let taxCreditPaidAbroad: Int = 0
+totalTaxCreditPaidAbroad += taxCreditPaidAbroad
 
 // Calculate taxDifferenceForPayment
 let taxDifferenceForPayment = taxAmount - Double(taxCreditPaidAbroad)
+totalTaxDifferenceForPayment += taxDifferenceForPayment
 
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
