@@ -1,6 +1,6 @@
 import Foundation
 import Cocoa
-import TaxCalculation
+import TaxHelper
 
 // Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"
