@@ -186,30 +186,30 @@ if monthYearFlag.isEmpty {
 
 // Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
-let totalCalculatedDeduction += calculatedDeduction
+let totalCalculatedDeduction = calculatedDeduction
 
 // Calculate amount of income (amount - calculatedDeduction)
 let amountOfIncome = paymentAmount - calculatedDeduction
-TaxTotals.totalAmountOfIncome += amountOfIncome
+let totalAmountOfIncome = amountOfIncome
 
 // Calculate health insurance value (4% of the amountOfIncome)
 let healthInsurance = amountOfIncome * 0.04
-TaxTotals.totalHealthInsurance += healthInsurance
+let totalHealthInsurance = healthInsurance
 
 // Calculate taxBase
 let taxBase = amountOfIncome - healthInsurance
-TaxTotals.totalTaxBase += taxBase
+let totalTaxBase = taxBase
 
 // Calculate taxAmount
 let taxAmount = taxBase * 0.1
-TaxTotals.totalTaxAmount += taxAmount
+let totalTaxAmount = taxAmount
 
 let taxCreditPaidAbroad: Double = 0.0
-TaxTotals.totalTaxCreditPaidAbroad += taxCreditPaidAbroad
+let totalTaxCreditPaidAbroad = taxCreditPaidAbroad
 
 // Calculate taxDifferenceForPayment
 let taxDifferenceForPayment = taxAmount - Double(taxCreditPaidAbroad)
-TaxTotals.totalTaxDifferenceForPayment += taxDifferenceForPayment
+let totalTaxDifferenceForPayment = taxDifferenceForPayment
 
 // Add user input as text to the image
 // (Use amountOfIncome instead of paymentAmount for drawing)
