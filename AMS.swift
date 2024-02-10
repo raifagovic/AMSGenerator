@@ -13,6 +13,9 @@ guard let image = NSImage(contentsOfFile: imagePath) else {
 // Create a mutable copy of the image
 let mutableImage = image.copy() as! NSImage
 
+let currentPage: Int = 1
+
+
 // Function to draw formatted date on the image
 func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
     var currentX = coordinates.x
@@ -170,50 +173,28 @@ if monthYearFlag.isEmpty {
     monthYearFlag = dateFormatter.string(from: currentDate)
 }
 
-// Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
 let totalCalculatedDeduction = calculatedDeduction
 
-// Calculate amount of income (amount - calculatedDeduction)
 let amountOfIncome = paymentAmount - calculatedDeduction
 let totalAmountOfIncome = amountOfIncome
 
-// Calculate health insurance value (4% of the amountOfIncome)
 let healthInsurance = amountOfIncome * 0.04
 let totalHealthInsurance = healthInsurance
 
-// Calculate taxBase
 let taxBase = amountOfIncome - healthInsurance
 let totalTaxBase = taxBase
 
-// Calculate taxAmount
 let taxAmount = taxBase * 0.1
 let totalTaxAmount = taxAmount
 
 let taxCreditPaidAbroad: Double = 0.0
 let totalTaxCreditPaidAbroad = taxCreditPaidAbroad
 
-// Calculate taxDifferenceForPayment
 let taxDifferenceForPayment = taxAmount - Double(taxCreditPaidAbroad)
 let totalTaxDifferenceForPayment = taxDifferenceForPayment
 
-// Add user input as text to the image
-// (Use amountOfIncome instead of paymentAmount for drawing)
-let nameCoordinates = NSPoint(x: 120, y: 1170)
-let addressCoordinates = NSPoint(x: 120, y: 1090)
-let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
-let dateCoordinates = NSPoint(x: 1100, y: 1090)
-let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
-let payerNameCoordinates = NSPoint(x: 120, y: 925)
-let payerAddressCoordinates = NSPoint(x: 945, y: 925)
-let payerCountryCoordinates = NSPoint(x: 1780, y: 925)
-let amountOfIncomeCoordinates = NSPoint(x: 285, y: 690)
 let deductionCoordinates = NSPoint(x: 0, y: 0)
-let healthInsuranceCoordinates = NSPoint(x: 700, y: 690)
-let taxBaseCoordinates = NSPoint(x: 1020, y: 690)
-let taxAmountCoordinates = NSPoint(x: 1360, y: 690)
-let taxCreditPaidAbroadCoordinates = NSPoint(x: 1710, y: 690)
-let taxDifferenceForPaymentCoordinates = NSPoint(x: 2025, y: 690)
 let spacingBetweenDigits: CGFloat = 25.5
 
 mutableImage.lockFocus()
@@ -227,16 +208,17 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 // Draw the name onto the image at the specified coordinates
 let nameText = NSAttributedString(string: name, attributes: textAttributes)
 let nameSize = nameText.size()
-let nameRect = NSRect(origin: nameCoordinates, size: nameSize)
+let nameRect = NSRect(origin: NSPoint(x: 120, y: 1170), size: nameSize)
 nameText.draw(with: nameRect)
 
 // Draw the address onto the image at the specified coordinates
 let addressText = NSAttributedString(string: address, attributes: textAttributes)
 let addressSize = addressText.size()
-let addressRect = NSRect(origin: addressCoordinates, size: addressSize)
+let addressRect = NSRect(origin: NSPoint(x: 120, y: 1090), size: addressSize)
 addressText.draw(with: addressRect)
 
 // Draw the identification number onto the image at the specified coordinates
+let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
 var currentX = identificationNumberCoordinates.x
 
 for digit in identificationNumber {
@@ -250,27 +232,29 @@ for digit in identificationNumber {
 }
 
 // Draw the formatted date onto the image at the specified coordinates
+let dateCoordinates = NSPoint(x: 1100, y: 1090)
 drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 
 // Draw the formatted month and year onto the image at the specified coordinates
+let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 drawFormattedMonthYear(monthYearFlag, at: monthYearCoordinates, with: textAttributes)
 
 // Draw the payer name onto the image at the specified coordinates
 let payerNameText = NSAttributedString(string: payerName, attributes: textAttributes)
 let payerNameSize = payerNameText.size()
-let payerNameRect = NSRect(origin: payerNameCoordinates, size: payerNameSize)
+let payerNameRect = NSRect(origin: NSPoint(x: 120, y: 925), size: payerNameSize)
 payerNameText.draw(with: payerNameRect)
 
 // Draw the payer address onto the image at the specified coordinates
 let payerAddressText = NSAttributedString(string: payerAddress, attributes: textAttributes)
 let payerAddressSize = payerAddressText.size()
-let payerAddressRect = NSRect(origin: payerAddressCoordinates, size: payerAddressSize)
+let payerAddressRect = NSRect(origin: NSPoint(x: 945, y: 925), size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
 
 // Draw the payer country onto the image at the specified coordinates
 let payerCountryText = NSAttributedString(string: payerCountry, attributes: textAttributes)
 let payerCountrySize = payerCountryText.size()
-let payerCountryRect = NSRect(origin: payerCountryCoordinates, size: payerCountrySize)
+let payerCountryRect = NSRect(origin: NSPoint(x: 1780, y: 925), size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
 
 // Format amountOfIncome to display with comma as the decimal separator
@@ -279,7 +263,7 @@ let formattedAmountOfIncome = String(format: "%.2f", amountOfIncome).replacingOc
 // Draw the payment amount onto the image at the specified coordinates
 let amountOfIncomeText = NSAttributedString(string: formattedAmountOfIncome, attributes: textAttributes)
 let amountOfIncomeSize = amountOfIncomeText.size()
-let amountOfIncomeRect = NSRect(origin: amountOfIncomeCoordinates, size: amountOfIncomeSize)
+let amountOfIncomeRect = NSRect(origin: NSPoint(x: 285, y: 690), size: amountOfIncomeSize)
 amountOfIncomeText.draw(with: amountOfIncomeRect)
 
 // Format healthInsurance to display with comma as the decimal separator
@@ -288,7 +272,7 @@ let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacing
 // Draw the health insurance value onto the image at the specified coordinates
 let healthInsuranceText = NSAttributedString(string: formattedHealthInsurance, attributes: textAttributes)
 let healthInsuranceSize = healthInsuranceText.size()
-let healthInsuranceRect = NSRect(origin: healthInsuranceCoordinates, size: healthInsuranceSize)
+let healthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 690), size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
 
 // Format taxBase to display with comma as the decimal separator
@@ -297,7 +281,7 @@ let formattedTaxBase = String(format: "%.2f", taxBase).replacingOccurrences(of: 
 // Draw the taxBase onto the image at the specified coordinates
 let taxBaseText = NSAttributedString(string: formattedTaxBase, attributes: textAttributes)
 let taxBaseSize = taxBaseText.size()
-let taxBaseRect = NSRect(origin: taxBaseCoordinates, size: taxBaseSize)
+let taxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 690), size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
 
 // Format taxAmount to display with comma as the decimal separator
@@ -306,7 +290,7 @@ let formattedTaxAmount = String(format: "%.2f", taxAmount).replacingOccurrences(
 // Draw the tax amount onto the image at the specified coordinates
 let taxAmountText = NSAttributedString(string: formattedTaxAmount, attributes: textAttributes)
 let taxAmountSize = taxAmountText.size()
-let taxAmountRect = NSRect(origin: taxAmountCoordinates, size: taxAmountSize)
+let taxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 690), size: taxAmountSize)
 taxAmountText.draw(with: taxAmountRect)
 
 // Format formattedTaxCreditPaidAbroad to display with comma as the decimal separator
@@ -315,7 +299,7 @@ let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAb
 // Draw the tax credit paid abroad onto the image at the specified coordinates
 let taxCreditPaidAbroadText = NSAttributedString(string: formattedTaxCreditPaidAbroad, attributes: textAttributes)
 let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
-let taxCreditPaidAbroadRect = NSRect(origin: taxCreditPaidAbroadCoordinates, size: taxCreditPaidAbroadSize)
+let taxCreditPaidAbroadRect = NSRect(origin: NSPoint(x: 1710, y: 690), size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
 
 // Format taxDifferenceForPayment to display with comma as the decimal separator
@@ -324,7 +308,7 @@ let formattedTaxDifferenceForPayment = String(format: "%.2f", taxDifferenceForPa
 // Draw the tax difference for payment onto the image at the specified coordinates
 let taxDifferenceForPaymentText = NSAttributedString(string: formattedTaxDifferenceForPayment, attributes: textAttributes)
 let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
-let taxDifferenceForPaymentRect = NSRect(origin: taxDifferenceForPaymentCoordinates, size: taxDifferenceForPaymentSize)
+let taxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 690), size: taxDifferenceForPaymentSize)
 taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
 
 mutableImage.unlockFocus()
