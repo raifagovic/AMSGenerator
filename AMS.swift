@@ -186,7 +186,7 @@ if monthYearFlag.isEmpty {
 
 // Calculate deduction value
 let calculatedDeduction = Double(deduction) / 100 * paymentAmount
-TaxTotals.totalCalculatedDeduction += calculatedDeduction
+let totalCalculatedDeduction += calculatedDeduction
 
 // Calculate amount of income (amount - calculatedDeduction)
 let amountOfIncome = paymentAmount - calculatedDeduction
@@ -361,13 +361,4 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
     }
 } else {
     print("Error getting CGImage representation of the image.")
-}
-
-struct TaxTotals {
-    static var totalCalculatedDeduction: Double = 0.0
-    static var totalAmountOfIncome: Double = 0.0
-    static var totalHealthInsurance: Double = 0.0
-    static var totalTaxBase: Double = 0.0
-    static var totalTaxCreditPaidAbroad: Double = 0.0
-    static var totalTaxDifferenceForPayment: Double = 0.0
 }
