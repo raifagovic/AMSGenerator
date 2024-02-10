@@ -207,7 +207,7 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 // Draw the current page onto the image at the specified coordinates
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
 let currentPageSize = currentPageText.size()
-let currentPageRect = NSRect(origin: NSPoint(x: 2000, y: 200), size: currentPageSize)
+let currentPageRect = NSRect(origin: NSPoint(x: 1685, y: 1485), size: currentPageSize)
 currentPageText.draw(with: currentPageRect)
 
 // Draw the name onto the image at the specified coordinates
