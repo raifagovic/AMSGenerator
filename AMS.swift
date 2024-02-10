@@ -15,7 +15,6 @@ let mutableImage = image.copy() as! NSImage
 
 let currentPage: Int = 1
 
-
 // Function to draw formatted date on the image
 func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
     var currentX = coordinates.x
@@ -204,6 +203,12 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
     .foregroundColor: NSColor.black
 ]
+
+// Draw the current page onto the image at the specified coordinates
+let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
+let currentPageSize = currentPageText.size()
+let currentPageRect = NSRect(origin: NSPoint(x: 2000, y: 200), size: currentPageSize)
+currentPageText.draw(with: currentPageRect)
 
 // Draw the name onto the image at the specified coordinates
 let nameText = NSAttributedString(string: name, attributes: textAttributes)
