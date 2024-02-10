@@ -14,6 +14,7 @@ guard let image = NSImage(contentsOfFile: imagePath) else {
 let mutableImage = image.copy() as! NSImage
 
 let currentPage: Int = 1
+let totalPages: Int = 1
 
 // Function to draw formatted date on the image
 func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
@@ -209,6 +210,12 @@ let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [
 let currentPageSize = currentPageText.size()
 let currentPageRect = NSRect(origin: NSPoint(x: 1685, y: 1485), size: currentPageSize)
 currentPageText.draw(with: currentPageRect)
+
+// Draw the total number of pages onto the image at the specified coordinates
+let totalPagesText = NSAttributedString(string: "\(totalPages)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
+let totalPagesSize = totalPagesText.size()
+let totalPagesRect = NSRect(origin: NSPoint(x: 1685, y: 1416), size: totalPagesSize)
+totalPagesText.draw(with: totalPagesRect)
 
 // Draw the name onto the image at the specified coordinates
 let nameText = NSAttributedString(string: name, attributes: textAttributes)
