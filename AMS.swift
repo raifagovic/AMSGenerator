@@ -269,55 +269,43 @@ let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: NSPoint(x: 1780, y: 925), size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
 
-// Format amountOfIncome to display with comma as the decimal separator
-let formattedAmountOfIncome = String(format: "%.2f", amountOfIncome).replacingOccurrences(of: ".", with: ",")
-
 // Draw the payment amount onto the image at the specified coordinates
+let formattedAmountOfIncome = String(format: "%.2f", amountOfIncome).replacingOccurrences(of: ".", with: ",")
 let amountOfIncomeText = NSAttributedString(string: formattedAmountOfIncome, attributes: textAttributes)
 let amountOfIncomeSize = amountOfIncomeText.size()
 let amountOfIncomeRect = NSRect(origin: NSPoint(x: 285, y: 690), size: amountOfIncomeSize)
 amountOfIncomeText.draw(with: amountOfIncomeRect)
 
-// Format healthInsurance to display with comma as the decimal separator
-let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacingOccurrences(of: ".", with: ",")
-
 // Draw the health insurance value onto the image at the specified coordinates
+let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacingOccurrences(of: ".", with: ",")
 let healthInsuranceText = NSAttributedString(string: formattedHealthInsurance, attributes: textAttributes)
 let healthInsuranceSize = healthInsuranceText.size()
 let healthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 690), size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
 
-// Format taxBase to display with comma as the decimal separator
-let formattedTaxBase = String(format: "%.2f", taxBase).replacingOccurrences(of: ".", with: ",")
-
 // Draw the taxBase onto the image at the specified coordinates
+let formattedTaxBase = String(format: "%.2f", taxBase).replacingOccurrences(of: ".", with: ",")
 let taxBaseText = NSAttributedString(string: formattedTaxBase, attributes: textAttributes)
 let taxBaseSize = taxBaseText.size()
 let taxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 690), size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
 
-// Format taxAmount to display with comma as the decimal separator
-let formattedTaxAmount = String(format: "%.2f", taxAmount).replacingOccurrences(of: ".", with: ",")
-
 // Draw the tax amount onto the image at the specified coordinates
+let formattedTaxAmount = String(format: "%.2f", taxAmount).replacingOccurrences(of: ".", with: ",")
 let taxAmountText = NSAttributedString(string: formattedTaxAmount, attributes: textAttributes)
 let taxAmountSize = taxAmountText.size()
 let taxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 690), size: taxAmountSize)
 taxAmountText.draw(with: taxAmountRect)
 
-// Format formattedTaxCreditPaidAbroad to display with comma as the decimal separator
-let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
-
 // Draw the tax credit paid abroad onto the image at the specified coordinates
+let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
 let taxCreditPaidAbroadText = NSAttributedString(string: formattedTaxCreditPaidAbroad, attributes: textAttributes)
 let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
 let taxCreditPaidAbroadRect = NSRect(origin: NSPoint(x: 1710, y: 690), size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
 
-// Format taxDifferenceForPayment to display with comma as the decimal separator
-let formattedTaxDifferenceForPayment = String(format: "%.2f", taxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
-
 // Draw the tax difference for payment onto the image at the specified coordinates
+let formattedTaxDifferenceForPayment = String(format: "%.2f", taxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
 let taxDifferenceForPaymentText = NSAttributedString(string: formattedTaxDifferenceForPayment, attributes: textAttributes)
 let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
 let taxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 690), size: taxDifferenceForPaymentSize)
