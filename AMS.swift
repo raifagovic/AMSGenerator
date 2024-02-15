@@ -315,7 +315,7 @@ taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
 let formattedTotalHealthInsurance = String(format: "%.2f", totalHealthInsurance).replacingOccurrences(of: ".", with: ",")
 let totalHealthInsuranceText = NSAttributedString(string: formattedTotalHealthInsurance, attributes: textAttributes)
 let totalHealthInsuranceSize = totalHealthInsuranceText.size()
-let totalHealthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 290), size: totalHealthInsuranceSize)
+let totalHealthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 344), size: totalHealthInsuranceSize)
 totalHealthInsuranceText.draw(with: totalHealthInsuranceRect)
 
 mutableImage.unlockFocus()
