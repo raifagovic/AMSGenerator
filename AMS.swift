@@ -325,6 +325,13 @@ let totalTaxBaseSize = totalTaxBaseText.size()
 let totalTaxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 344), size: totalTaxBaseSize)
 totalTaxBaseText.draw(with: totalTaxBaseRect)
 
+// Draw the total tax amount onto the image at the specified coordinates
+let formattedTotalTaxAmount = String(format: "%.2f", totalTaxAmount).replacingOccurrences(of: ".", with: ",")
+let totalTaxAmountText = NSAttributedString(string: formattedTotalTaxAmount, attributes: textAttributes)
+let totalTaxAmountSize = totalTaxAmountText.size()
+let totalTaxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 690), size: totalTaxAmountSize)
+totalTaxAmountText.draw(with: totalTaxAmountRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
