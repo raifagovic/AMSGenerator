@@ -311,6 +311,13 @@ let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
 let taxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 690), size: taxDifferenceForPaymentSize)
 taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
 
+// Draw the total health insurance value onto the image at the specified coordinates
+let formattedTotalHealthInsurance = String(format: "%.2f", totalHealthInsurance).replacingOccurrences(of: ".", with: ",")
+let totalHealthInsuranceText = NSAttributedString(string: formattedTotalHealthInsurance, attributes: textAttributes)
+let totalHealthInsuranceSize = totalHealthInsuranceText.size()
+let totalHealthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 290), size: totalHealthInsuranceSize)
+totalHealthInsuranceText.draw(with: totalHealthInsuranceRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
