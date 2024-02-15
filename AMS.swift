@@ -329,7 +329,7 @@ totalTaxBaseText.draw(with: totalTaxBaseRect)
 let formattedTotalTaxAmount = String(format: "%.2f", totalTaxAmount).replacingOccurrences(of: ".", with: ",")
 let totalTaxAmountText = NSAttributedString(string: formattedTotalTaxAmount, attributes: textAttributes)
 let totalTaxAmountSize = totalTaxAmountText.size()
-let totalTaxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 690), size: totalTaxAmountSize)
+let totalTaxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 344), size: totalTaxAmountSize)
 totalTaxAmountText.draw(with: totalTaxAmountRect)
 
 mutableImage.unlockFocus()
