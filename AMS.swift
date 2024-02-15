@@ -343,7 +343,7 @@ totalTaxCreditPaidAbroadText.draw(with: totalTaxCreditPaidAbroadRect)
 let formattedTotalTaxDifferenceForPayment = String(format: "%.2f", totalTaxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
 let totalTaxDifferenceForPaymentText = NSAttributedString(string: formattedTotalTaxDifferenceForPayment, attributes: textAttributes)
 let totalTaxDifferenceForPaymentSize = totalTaxDifferenceForPaymentText.size()
-let totalTaxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 690), size: totalTaxDifferenceForPaymentSize)
+let totalTaxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 344), size: totalTaxDifferenceForPaymentSize)
 totalTaxDifferenceForPaymentText.draw(with: totalTaxDifferenceForPaymentRect)
 
 mutableImage.unlockFocus()
