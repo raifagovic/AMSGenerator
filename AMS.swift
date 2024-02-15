@@ -318,6 +318,13 @@ let totalHealthInsuranceSize = totalHealthInsuranceText.size()
 let totalHealthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 344), size: totalHealthInsuranceSize)
 totalHealthInsuranceText.draw(with: totalHealthInsuranceRect)
 
+// Draw the total taxBase onto the image at the specified coordinates
+let formattedTotalTaxBase = String(format: "%.2f", totalTaxBase).replacingOccurrences(of: ".", with: ",")
+let totalTaxBaseText = NSAttributedString(string: formattedTotalTaxBase, attributes: textAttributes)
+let totalTaxBaseSize = totalTaxBaseText.size()
+let totalTaxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 390), size: totalTaxBaseSize)
+totalTaxBaseText.draw(with: totalTaxBaseRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
