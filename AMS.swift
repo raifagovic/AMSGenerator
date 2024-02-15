@@ -332,6 +332,13 @@ let totalTaxAmountSize = totalTaxAmountText.size()
 let totalTaxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 344), size: totalTaxAmountSize)
 totalTaxAmountText.draw(with: totalTaxAmountRect)
 
+// Draw the total tax credit paid abroad onto the image at the specified coordinates
+let formattedTotalTaxCreditPaidAbroad = String(format: "%.2f", Double(totalTaxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
+let totalTaxCreditPaidAbroadText = NSAttributedString(string: formattedTotalTaxCreditPaidAbroad, attributes: textAttributes)
+let totalTaxCreditPaidAbroadSize = totalTaxCreditPaidAbroadText.size()
+let totalTaxCreditPaidAbroadRect = NSRect(origin: NSPoint(x: 1710, y: 690), size: totalTaxCreditPaidAbroadSize)
+totalTaxCreditPaidAbroadText.draw(with: totalTaxCreditPaidAbroadRect)
+
 mutableImage.unlockFocus()
 
 // Save the final image in JPEG format to the same Resources folder
