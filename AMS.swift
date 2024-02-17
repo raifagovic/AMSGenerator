@@ -243,27 +243,27 @@ for digit in identificationNumber {
     currentX += digitSize.width + spacingBetweenDigits
 }
 
-// Draw the formatted date onto the image at the specified coordinates
+// Draw the formatted date
 let dateCoordinates = NSPoint(x: 1100, y: 1090)
 drawFormattedDate(dateInput, at: dateCoordinates, with: textAttributes)
 
-// Draw the formatted month and year onto the image at the specified coordinates
+// Draw the formatted month and year
 let monthYearCoordinates = NSPoint(x: 1805, y: 1165)
 drawFormattedMonthYear(monthYearFlag, at: monthYearCoordinates, with: textAttributes)
 
-// Draw the payer name onto the image at the specified coordinates
+// Draw the payer name
 let payerNameText = NSAttributedString(string: payerName, attributes: textAttributes)
 let payerNameSize = payerNameText.size()
 let payerNameRect = NSRect(origin: NSPoint(x: 120, y: 925), size: payerNameSize)
 payerNameText.draw(with: payerNameRect)
 
-// Draw the payer address onto the image at the specified coordinates
+// Draw the payer address
 let payerAddressText = NSAttributedString(string: payerAddress, attributes: textAttributes)
 let payerAddressSize = payerAddressText.size()
 let payerAddressRect = NSRect(origin: NSPoint(x: 945, y: 925), size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
 
-// Draw the payer country onto the image at the specified coordinates
+// Draw the payer country
 let payerCountryText = NSAttributedString(string: payerCountry, attributes: textAttributes)
 let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: NSPoint(x: 1780, y: 925), size: payerCountrySize)
@@ -276,35 +276,35 @@ let amountOfIncomeSize = amountOfIncomeText.size()
 let amountOfIncomeRect = NSRect(origin: NSPoint(x: 285, y: 690), size: amountOfIncomeSize)
 amountOfIncomeText.draw(with: amountOfIncomeRect)
 
-// Draw the health insurance value onto the image at the specified coordinates
+// Draw the health insurance
 let formattedHealthInsurance = String(format: "%.2f", healthInsurance).replacingOccurrences(of: ".", with: ",")
 let healthInsuranceText = NSAttributedString(string: formattedHealthInsurance, attributes: textAttributes)
 let healthInsuranceSize = healthInsuranceText.size()
 let healthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 690), size: healthInsuranceSize)
 healthInsuranceText.draw(with: healthInsuranceRect)
 
-// Draw the taxBase onto the image at the specified coordinates
+// Draw the tax base
 let formattedTaxBase = String(format: "%.2f", taxBase).replacingOccurrences(of: ".", with: ",")
 let taxBaseText = NSAttributedString(string: formattedTaxBase, attributes: textAttributes)
 let taxBaseSize = taxBaseText.size()
 let taxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 690), size: taxBaseSize)
 taxBaseText.draw(with: taxBaseRect)
 
-// Draw the tax amount onto the image at the specified coordinates
+// Draw the tax amount
 let formattedTaxAmount = String(format: "%.2f", taxAmount).replacingOccurrences(of: ".", with: ",")
 let taxAmountText = NSAttributedString(string: formattedTaxAmount, attributes: textAttributes)
 let taxAmountSize = taxAmountText.size()
 let taxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 690), size: taxAmountSize)
 taxAmountText.draw(with: taxAmountRect)
 
-// Draw the tax credit paid abroad onto the image at the specified coordinates
+// Draw the tax credit paid abroad
 let formattedTaxCreditPaidAbroad = String(format: "%.2f", Double(taxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
 let taxCreditPaidAbroadText = NSAttributedString(string: formattedTaxCreditPaidAbroad, attributes: textAttributes)
 let taxCreditPaidAbroadSize = taxCreditPaidAbroadText.size()
 let taxCreditPaidAbroadRect = NSRect(origin: NSPoint(x: 1710, y: 690), size: taxCreditPaidAbroadSize)
 taxCreditPaidAbroadText.draw(with: taxCreditPaidAbroadRect)
 
-// Draw the tax difference for payment onto the image at the specified coordinates
+// Draw the tax difference for payment
 let formattedTaxDifferenceForPayment = String(format: "%.2f", taxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
 let taxDifferenceForPaymentText = NSAttributedString(string: formattedTaxDifferenceForPayment, attributes: textAttributes)
 let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
