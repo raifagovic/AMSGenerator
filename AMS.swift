@@ -311,35 +311,35 @@ let taxDifferenceForPaymentSize = taxDifferenceForPaymentText.size()
 let taxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 690), size: taxDifferenceForPaymentSize)
 taxDifferenceForPaymentText.draw(with: taxDifferenceForPaymentRect)
 
-// Draw the total health insurance value onto the image at the specified coordinates
+// Draw the total health insurance
 let formattedTotalHealthInsurance = String(format: "%.2f", totalHealthInsurance).replacingOccurrences(of: ".", with: ",")
 let totalHealthInsuranceText = NSAttributedString(string: formattedTotalHealthInsurance, attributes: textAttributes)
 let totalHealthInsuranceSize = totalHealthInsuranceText.size()
 let totalHealthInsuranceRect = NSRect(origin: NSPoint(x: 700, y: 344), size: totalHealthInsuranceSize)
 totalHealthInsuranceText.draw(with: totalHealthInsuranceRect)
 
-// Draw the total taxBase onto the image at the specified coordinates
+// Draw the total tax base
 let formattedTotalTaxBase = String(format: "%.2f", totalTaxBase).replacingOccurrences(of: ".", with: ",")
 let totalTaxBaseText = NSAttributedString(string: formattedTotalTaxBase, attributes: textAttributes)
 let totalTaxBaseSize = totalTaxBaseText.size()
 let totalTaxBaseRect = NSRect(origin: NSPoint(x: 1020, y: 344), size: totalTaxBaseSize)
 totalTaxBaseText.draw(with: totalTaxBaseRect)
 
-// Draw the total tax amount onto the image at the specified coordinates
+// Draw the total tax amount
 let formattedTotalTaxAmount = String(format: "%.2f", totalTaxAmount).replacingOccurrences(of: ".", with: ",")
 let totalTaxAmountText = NSAttributedString(string: formattedTotalTaxAmount, attributes: textAttributes)
 let totalTaxAmountSize = totalTaxAmountText.size()
 let totalTaxAmountRect = NSRect(origin: NSPoint(x: 1360, y: 344), size: totalTaxAmountSize)
 totalTaxAmountText.draw(with: totalTaxAmountRect)
 
-// Draw the total tax credit paid abroad onto the image at the specified coordinates
+// Draw the total tax credit paid abroad
 let formattedTotalTaxCreditPaidAbroad = String(format: "%.2f", Double(totalTaxCreditPaidAbroad)).replacingOccurrences(of: ".", with: ",")
 let totalTaxCreditPaidAbroadText = NSAttributedString(string: formattedTotalTaxCreditPaidAbroad, attributes: textAttributes)
 let totalTaxCreditPaidAbroadSize = totalTaxCreditPaidAbroadText.size()
 let totalTaxCreditPaidAbroadRect = NSRect(origin: NSPoint(x: 1710, y: 344), size: totalTaxCreditPaidAbroadSize)
 totalTaxCreditPaidAbroadText.draw(with: totalTaxCreditPaidAbroadRect)
 
-// Draw the total tax difference for payment onto the image at the specified coordinates
+// Draw the total tax difference for payment
 let formattedTotalTaxDifferenceForPayment = String(format: "%.2f", totalTaxDifferenceForPayment).replacingOccurrences(of: ".", with: ",")
 let totalTaxDifferenceForPaymentText = NSAttributedString(string: formattedTotalTaxDifferenceForPayment, attributes: textAttributes)
 let totalTaxDifferenceForPaymentSize = totalTaxDifferenceForPaymentText.size()
@@ -348,7 +348,7 @@ totalTaxDifferenceForPaymentText.draw(with: totalTaxDifferenceForPaymentRect)
 
 mutableImage.unlockFocus()
 
-// Save the final image in JPEG format to the same Resources folder
+// Save the final image
 let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
 if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
     let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
