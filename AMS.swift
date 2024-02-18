@@ -54,29 +54,40 @@ func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, w
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MM.yyyy."
 
-    // Parse the month and year input
-    let components = monthYearInput.components(separatedBy: ".")
-    if components.count == 2, let month = Int(components[0]), let year = Int(components[1]) {
-        let formattedMonthYear = String(format: "%02d %02d", month, year % 100)
+    var formattedMonthYear: String
 
-        for (index, digit) in formattedMonthYear.enumerated() {
-            let spacing: CGFloat = (index == 2) ? 52 : 25.5
-
-            if index == 0 {
-                currentX += 0
-            } else {
-                currentX += spacing
-            }
-
-            let digitText = NSAttributedString(string: String(digit), attributes: attributes)
-            let digitSize = digitText.size()
-            let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
-            digitText.draw(with: digitRect)
-
-            currentX += digitSize.width
+    if monthYearFlag.isEmpty {
+        let currentDate = Date()
+        formattedMonthYear = dateFormatter.string(from: currentDate)
+    } else {
+        // Parse the month and year input
+        let components = monthYearFlag.components(separatedBy: ".")
+        if components.count == 2, let month = Int(components[0]), let year = Int(components[1]) {
+            formattedMonthYear = String(format: "%02d %02d", month, year % 100)
+        } else {
+            // Handle invalid input
+            return
         }
     }
+
+    for (index, digit) in formattedMonthYear.enumerated() {
+        let spacing: CGFloat = (index == 2) ? 52 : 25.5
+
+        if index == 0 {
+            currentX += 0
+        } else {
+            currentX += spacing
+        }
+
+        let digitText = NSAttributedString(string: String(digit), attributes: attributes)
+        let digitSize = digitText.size()
+        let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
+        digitText.draw(with: digitRect)
+
+        currentX += digitSize.width
+    }
 }
+
 
 // Command-line arguments
 let arguments = CommandLine.arguments
@@ -205,31 +216,31 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .foregroundColor: NSColor.black
 ]
 
-// Draw the current page onto the image at the specified coordinates
+// Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
 let currentPageSize = currentPageText.size()
 let currentPageRect = NSRect(origin: NSPoint(x: 1685, y: 1485), size: currentPageSize)
 currentPageText.draw(with: currentPageRect)
 
-// Draw the total number of pages onto the image at the specified coordinates
+// Draw the total number of pages
 let totalPagesText = NSAttributedString(string: "\(totalPages)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
 let totalPagesSize = totalPagesText.size()
 let totalPagesRect = NSRect(origin: NSPoint(x: 1685, y: 1416), size: totalPagesSize)
 totalPagesText.draw(with: totalPagesRect)
 
-// Draw the name onto the image at the specified coordinates
+// Draw the name
 let nameText = NSAttributedString(string: name, attributes: textAttributes)
 let nameSize = nameText.size()
 let nameRect = NSRect(origin: NSPoint(x: 120, y: 1170), size: nameSize)
 nameText.draw(with: nameRect)
 
-// Draw the address onto the image at the specified coordinates
+// Draw the address
 let addressText = NSAttributedString(string: address, attributes: textAttributes)
 let addressSize = addressText.size()
 let addressRect = NSRect(origin: NSPoint(x: 120, y: 1090), size: addressSize)
 addressText.draw(with: addressRect)
 
-// Draw the identification number onto the image at the specified coordinates
+// Draw the identification number
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
 var currentX = identificationNumberCoordinates.x
 
