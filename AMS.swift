@@ -77,48 +77,6 @@ func drawFormattedMonthYear(_ monthYearFlag: String, at coordinates: NSPoint, wi
     }
 }
 
-// Function to draw formatted month and year on the image
-//func drawFormattedMonthYear(_ monthYearInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
-//    var currentX = coordinates.x
-//
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "MM.yyyy."
-//
-//    var formattedMonthYear: String
-//
-//    if monthYearFlag.isEmpty {
-//        let currentDate = Date()
-//        formattedMonthYear = dateFormatter.string(from: currentDate)
-//    } else {
-//        // Parse the month and year input
-//        let components = monthYearFlag.components(separatedBy: ".")
-//        if components.count == 2, let month = Int(components[0]), let year = Int(components[1]) {
-//            formattedMonthYear = String(format: "%02d %02d", month, year % 100)
-//        } else {
-//            // Handle invalid input
-//            return
-//        }
-//    }
-//
-//    for (index, digit) in formattedMonthYear.enumerated() {
-//        let spacing: CGFloat = (index == 2) ? 52 : 25.5
-//
-//        if index == 0 {
-//            currentX += 0
-//        } else {
-//            currentX += spacing
-//        }
-//
-//        let digitText = NSAttributedString(string: String(digit), attributes: attributes)
-//        let digitSize = digitText.size()
-//        let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
-//        digitText.draw(with: digitRect)
-//
-//        currentX += digitSize.width
-//    }
-//}
-
-
 // Command-line arguments
 let arguments = CommandLine.arguments
 
