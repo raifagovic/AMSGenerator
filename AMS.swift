@@ -58,7 +58,7 @@ func drawFormattedMonthYear(_ monthYearFlag: String, at coordinates: NSPoint, wi
         let formattedMonthYear = dateFormatter.string(from: date)
         
         for (index, digit) in formattedMonthYear.enumerated() {
-            let spacing: CGFloat = (index == 2) ? 52 : 25.5
+            let spacing: CGFloat = (index == 2) ? 84 : 25.5
             
             if index == 0 {
                 currentX += 0 // If the first digit, no initial spacing
