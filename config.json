@@ -10,6 +10,19 @@
             "address": "456 Elm St",
             "identificationNumber": "ID456"
         }
+    },
+    "clients": {
+        "client1": {
+            "name": "Client 1",
+            "address": "789 Oak St",
+            "country": "USA"
+        },
+        "client2": {
+            "name": "Client 2",
+            "address": "101 Pine St",
+            "country": "Canada"
+        }
     }
 }
+
 
