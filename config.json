@@ -1,15 +1,8 @@
 {
-    "users": {
-        "user1": {
-            "name": "John",
-            "address": "123 Main St",
-            "identificationNumber": "ID123"
-        },
-        "user2": {
-            "name": "Alice",
-            "address": "456 Elm St",
-            "identificationNumber": "ID456"
-        }
+    "user": {
+        "name": "John",
+        "address": "123 Main St",
+        "identificationNumber": "ID123"
     },
     "clients": {
         "client1": {
@@ -24,5 +17,6 @@
         }
     }
 }
+
 
 
