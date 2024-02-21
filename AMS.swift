@@ -359,11 +359,11 @@ let addressSize = addressText.size()
 let addressRect = NSRect(origin: NSPoint(x: 120, y: 1090), size: addressSize)
 addressText.draw(with: addressRect)
 
-// Draw the identification number
+// Draw the identification number using savedIdentificationNumber
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
 var currentX = identificationNumberCoordinates.x
 
-for digit in identificationNumber {
+for digit in savedIdentificationNumber {
     let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
     let digitSize = digitText.size()
     let digitRect = NSRect(origin: NSPoint(x: currentX, y: identificationNumberCoordinates.y), size: digitSize)
