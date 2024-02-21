@@ -1,7 +1,20 @@
 {
-  "user" : {
-    "address" : "Djerzelezova",
-    "name" : "Mujo",
-    "identificationNumber" : "1234567890123"
-  }
+    "user": {
+        "name": "John",
+        "address": "123 Main St",
+        "identificationNumber": "ID123"
+    },
+    "clients": {
+        "client1": {
+            "name": "Client 1",
+            "address": "789 Oak St",
+            "country": "USA"
+        },
+        "client2": {
+            "name": "Client 2",
+            "address": "101 Pine St",
+            "country": "Canada"
+        }
+    }
 }
+
