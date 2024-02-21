@@ -376,8 +376,8 @@ let payerNameSize = payerNameText.size()
 let payerNameRect = NSRect(origin: NSPoint(x: 120, y: 925), size: payerNameSize)
 payerNameText.draw(with: payerNameRect)
 
-// Draw the payer address
-let payerAddressText = NSAttributedString(string: payerAddress, attributes: textAttributes)
+// Draw the payer address with savedPayerAddress
+let payerAddressText = NSAttributedString(string: savedPayerAddress, attributes: textAttributes)
 let payerAddressSize = payerAddressText.size()
 let payerAddressRect = NSRect(origin: NSPoint(x: 945, y: 925), size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
