@@ -122,15 +122,6 @@ if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpt
     writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
 }
 
-print("User Name: \(savedName)")
-print("User Address: \(savedAddress)")
-print("User Identification: \(savedIdentificationNumber)")
-
-
-
-
-
-
 
 // Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"

@@ -1,7 +1,7 @@
 {
   "user" : {
-    "identificationNumber" : "1234567890123",
+    "address" : "Djerzelezova",
     "name" : "Mujo",
-    "address" : "Djerzelezova"
+    "identificationNumber" : "1234567890123"
   }
 }
