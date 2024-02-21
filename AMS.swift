@@ -1,6 +1,137 @@
 import Foundation
 import Cocoa
 
+
+//import Foundation
+
+// Function to read user information from configuration file
+func readUserInfo() -> (name: String, address: String, identificationNumber: String) {
+    let fileManager = FileManager.default
+    let configURL = URL(fileURLWithPath: "config.json")
+    
+    // Check if configuration file exists
+    guard fileManager.fileExists(atPath: configURL.path) else {
+        return ("", "", "")
+    }
+    
+    do {
+        let data = try Data(contentsOf: configURL)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        
+        if let user = json?["user"] as? [String: Any],
+           let name = user["name"] as? String,
+           let address = user["address"] as? String,
+           let identificationNumber = user["identificationNumber"] as? String {
+            return (name, address, identificationNumber)
+        }
+    } catch {
+        print("Error reading configuration file:", error)
+    }
+    
+    return ("", "", "")
+}
+
+// Function to write user information to configuration file
+func writeUserInfo(name: String, address: String, identificationNumber: String) {
+    let fileManager = FileManager.default
+    let configURL = URL(fileURLWithPath: "config.json")
+    
+    // Create user dictionary
+    let user: [String: Any] = [
+        "name": name,
+        "address": address,
+        "identificationNumber": identificationNumber
+    ]
+    
+    // Create configuration dictionary
+    let config: [String: Any] = [
+        "user": user
+    ]
+    
+    // Serialize configuration dictionary to JSON data
+    do {
+        let jsonData = try JSONSerialization.data(withJSONObject: config, options: .prettyPrinted)
+        // Write JSON data to configuration file
+        try jsonData.write(to: configURL)
+        print("User information saved to configuration file.")
+    } catch {
+        print("Error writing configuration file:", error)
+    }
+}
+
+// Read user information from configuration file
+var (savedName, savedAddress, savedIdentificationNumber) = readUserInfo()
+
+// Parse command-line arguments
+let commandLineArgs = CommandLine.arguments
+
+for (index, argument) in commandLineArgs.enumerated() {
+    switch argument {
+    case "-n":
+        // Flag for name
+        if index + 1 < commandLineArgs.count {
+            savedName = commandLineArgs[index + 1]
+        }
+    case "-a":
+        // Flag for address
+        if index + 1 < commandLineArgs.count {
+            savedAddress = commandLineArgs[index + 1]
+        }
+    case "-i":
+        // Flag for identification number
+        if index + 1 < commandLineArgs.count {
+            savedIdentificationNumber = commandLineArgs[index + 1]
+        }
+    default:
+        break
+    }
+}
+
+// Check if user information is incomplete and prompt for input if needed
+if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpty {
+    print("Please enter your information:")
+    
+    // Prompt for name if not saved
+    if savedName.isEmpty {
+        print("Name:")
+        if let input = readLine() {
+            savedName = input
+        }
+    }
+    
+    // Prompt for address if not saved
+    if savedAddress.isEmpty {
+        print("Address:")
+        if let input = readLine() {
+            savedAddress = input
+        }
+    }
+    
+    // Prompt for identification number if not saved
+    if savedIdentificationNumber.isEmpty {
+        print("Identification Number:")
+        if let input = readLine() {
+            savedIdentificationNumber = input
+        }
+    }
+    
+    // Write user information to configuration file
+    writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
+} else {
+    // If user information is complete, write it to configuration file
+    writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
+}
+
+print("User Name: \(savedName)")
+print("User Address: \(savedAddress)")
+print("User Identification: \(savedIdentificationNumber)")
+
+
+
+
+
+
+
 // Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
