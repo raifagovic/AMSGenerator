@@ -80,6 +80,21 @@ for (index, argument) in commandLineArgs.enumerated() {
         if index + 1 < commandLineArgs.count {
             savedIdentificationNumber = commandLineArgs[index + 1]
         }
+    case "-p":
+        // Flag for payer name
+        if let clientInfo = readClientInfo() {
+            savedPayerName = clientInfo.name
+        }
+    case "-pa":
+        // Flag for payer address
+        if let clientInfo = readClientInfo() {
+            savedPayerAddress = clientInfo.address
+        }
+    case "-pc":
+        // Flag for payer country
+        if let clientInfo = readClientInfo() {
+            savedPayerCountry = clientInfo.country
+        }
     default:
         break
     }
