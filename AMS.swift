@@ -353,8 +353,8 @@ let nameSize = nameText.size()
 let nameRect = NSRect(origin: NSPoint(x: 120, y: 1170), size: nameSize)
 nameText.draw(with: nameRect)
 
-// Draw the address
-let addressText = NSAttributedString(string: address, attributes: textAttributes)
+// Draw the address using savedAddress
+let addressText = NSAttributedString(string: savedAddress, attributes: textAttributes)
 let addressSize = addressText.size()
 let addressRect = NSRect(origin: NSPoint(x: 120, y: 1090), size: addressSize)
 addressText.draw(with: addressRect)
