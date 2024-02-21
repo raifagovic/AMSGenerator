@@ -382,8 +382,8 @@ let payerAddressSize = payerAddressText.size()
 let payerAddressRect = NSRect(origin: NSPoint(x: 945, y: 925), size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
 
-// Draw the payer country
-let payerCountryText = NSAttributedString(string: payerCountry, attributes: textAttributes)
+// Draw the payer country with savedPayerCountry
+let payerCountryText = NSAttributedString(string: savedPayerCountry, attributes: textAttributes)
 let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: NSPoint(x: 1780, y: 925), size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
