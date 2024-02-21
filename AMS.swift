@@ -2,8 +2,6 @@ import Foundation
 import Cocoa
 
 
-//import Foundation
-
 // Function to read user information from configuration file
 func readUserInfo() -> (name: String, address: String, identificationNumber: String) {
     let fileManager = FileManager.default
