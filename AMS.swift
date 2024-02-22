@@ -6,16 +6,16 @@ import Cocoa
 func readUserInfo() -> (name: String, address: String, identificationNumber: String) {
     let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
-    
+
     // Check if configuration file exists
     guard fileManager.fileExists(atPath: configURL.path) else {
         return ("", "", "")
     }
-    
+
     do {
         let data = try Data(contentsOf: configURL)
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        
+
         if let user = json?["user"] as? [String: Any],
            let name = user["name"] as? String,
            let address = user["address"] as? String,
@@ -25,7 +25,7 @@ func readUserInfo() -> (name: String, address: String, identificationNumber: Str
     } catch {
         print("Error reading configuration file:", error)
     }
-    
+
     return ("", "", "")
 }
 
@@ -33,19 +33,19 @@ func readUserInfo() -> (name: String, address: String, identificationNumber: Str
 func writeUserInfo(name: String, address: String, identificationNumber: String) {
     let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
-    
+
     // Create user dictionary
     let user: [String: Any] = [
         "name": name,
         "address": address,
         "identificationNumber": identificationNumber
     ]
-    
+
     // Create configuration dictionary
     let config: [String: Any] = [
         "user": user
     ]
-    
+
     // Serialize configuration dictionary to JSON data
     do {
         let jsonData = try JSONSerialization.data(withJSONObject: config, options: .prettyPrinted)
@@ -103,7 +103,7 @@ for (index, argument) in commandLineArgs.enumerated() {
 // Check if user information is incomplete and prompt for input if needed
 if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpty {
     print("Please enter your information:")
-    
+
     // Prompt for name if not saved
     if savedName.isEmpty {
         print("Name:")
@@ -111,7 +111,7 @@ if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpt
             savedName = input
         }
     }
-    
+
     // Prompt for address if not saved
     if savedAddress.isEmpty {
         print("Address:")
@@ -119,7 +119,7 @@ if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpt
             savedAddress = input
         }
     }
-    
+
     // Prompt for identification number if not saved
     if savedIdentificationNumber.isEmpty {
         print("Identification Number:")
@@ -127,13 +127,52 @@ if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpt
             savedIdentificationNumber = input
         }
     }
-    
+
     // Write user information to configuration file
     writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
 } else {
     // If user information is complete, write it to configuration file
     writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
 }
+
+// Check if client information is incomplete and prompt for input if needed
+if savedPayerName.isEmpty || savedPayerAddress.isEmpty || savedPayerCountry.isEmpty {
+    print("Please enter client information:")
+    
+    // Prompt for payer name if not saved
+    if savedPayerName.isEmpty {
+        print("Payer Name:")
+        if let input = readLine() {
+            savedPayerName = input
+        }
+    }
+    
+    // Prompt for payer address if not saved
+    if savedPayerAddress.isEmpty {
+        print("Payer Address:")
+        if let input = readLine() {
+            savedPayerAddress = input
+        }
+    }
+    
+    // Prompt for payer country if not saved
+    if savedPayerCountry.isEmpty {
+        print("Payer Country:")
+        if let input = readLine() {
+            savedPayerCountry = input
+        }
+    }
+    
+    // Write client information to configuration file
+    writeUserInfo(name: savedPayerName, address: savedPayerAddress, identificationNumber: savedPayerCountry)
+} else {
+    // If client information is complete, write it to configuration file
+    writeUserInfo(name: savedPayerName, address: savedPayerAddress, identificationNumber: savedPayerCountry)
+}
+
+
+
+
 
 
 // Set the path to the PNG image in the Resources folder
