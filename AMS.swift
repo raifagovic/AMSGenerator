@@ -91,9 +91,9 @@ func writeClientInfo(name: String, address: String, country: String) {
 
     // Create client dictionary
     let client: [String: Any] = [
-        "payerName": name,
-        "payerAddress": address,
-        "payerCountry": country
+        "payerName": payerName,
+        "payerAddress": payerAddress,
+        "payerCountry": payerCountry
     ]
 
     // Create configuration dictionary
@@ -223,10 +223,10 @@ if savedPayerName.isEmpty || savedPayerAddress.isEmpty || savedPayerCountry.isEm
     }
     
     // Write client information to configuration file
-    writeUserInfo(name: savedPayerName, address: savedPayerAddress, identificationNumber: savedPayerCountry)
+    writeUserInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
 } else {
     // If client information is complete, write it to configuration file
-    writeUserInfo(name: savedPayerName, address: savedPayerAddress, identificationNumber: savedPayerCountry)
+    writeUserInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
 }
 
 
