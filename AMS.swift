@@ -30,7 +30,7 @@ func readUserInfo() -> (name: String, address: String, identificationNumber: Str
 }
 
 // Function to read client information from configuration file
-func readClientInfo() -> (name: String, address: String, country: String)? {
+func readClientInfo() -> (payerName: String, payerAddress: String, payerCountry: String)? {
     let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
 
@@ -85,7 +85,7 @@ func writeUserInfo(name: String, address: String, identificationNumber: String) 
 }
 
 // Function to write client information to configuration file
-func writeClientInfo(name: String, address: String, country: String) {
+func writeClientInfo(payerName: String, payerAddress: String, payerCountry: String) {
     let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
 
