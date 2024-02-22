@@ -142,17 +142,17 @@ for (index, argument) in commandLineArgs.enumerated() {
     case "-p":
         // Flag for payer name
         if let clientInfo = readClientInfo() {
-            savedPayerName = clientInfo.name
+            savedPayerName = commandLineArgs[index + 1]
         }
     case "-pa":
         // Flag for payer address
         if let clientInfo = readClientInfo() {
-            savedPayerAddress = clientInfo.address
+            savedPayerAddress = commandLineArgs[index + 1]
         }
     case "-pc":
         // Flag for payer country
         if let clientInfo = readClientInfo() {
-            savedPayerCountry = clientInfo.country
+            savedPayerCountry = commandLineArgs[index + 1]
         }
     default:
         break
