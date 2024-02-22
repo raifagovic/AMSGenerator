@@ -1,14 +1,7 @@
 {
-    "user": {
-        "name": "John",
-        "address": "123 Main St",
-        "identificationNumber": "ID123"
-    },
-    
-    "client": {
-        "name": "Bob",
-        "address": "789 Oak St",
-        "country": "USA"
-    }
+  "user" : {
+    "name" : "Mujo",
+    "address" : "Djerzelezova",
+    "identificationNumber" : "1234567890123"
+  }
 }
-

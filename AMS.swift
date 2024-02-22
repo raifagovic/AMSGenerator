@@ -36,7 +36,7 @@ func readClientInfo() -> (name: String, address: String, country: String)? {
 
     // Check if configuration file exists
     guard fileManager.fileExists(atPath: configURL.path) else {
-        return nil
+        return ("", "", "")
     }
 
     do {
@@ -47,13 +47,13 @@ func readClientInfo() -> (name: String, address: String, country: String)? {
            let name = client["payerName"] as? String,
            let address = client["payerAddress"] as? String,
            let country = client["payerCountry"] as? String {
-            return (name, address, country)
+            return (payerName, payerAddress, payerCountry)
         }
     } catch {
         print("Error reading configuration file:", error)
     }
 
-    return nil
+    return ("", "", "")
 }
 
 // Function to write user information to configuration file
