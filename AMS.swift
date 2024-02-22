@@ -29,6 +29,33 @@ func readUserInfo() -> (name: String, address: String, identificationNumber: Str
     return ("", "", "")
 }
 
+// Function to read client information from configuration file
+func readClientInfo() -> (name: String, address: String, country: String)? {
+    let fileManager = FileManager.default
+    let configURL = URL(fileURLWithPath: "config.json")
+
+    // Check if configuration file exists
+    guard fileManager.fileExists(atPath: configURL.path) else {
+        return nil
+    }
+
+    do {
+        let data = try Data(contentsOf: configURL)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+        if let client = json?["client"] as? [String: Any],
+           let name = client["payerName"] as? String,
+           let address = client["payerAddress"] as? String,
+           let country = client["payerCountry"] as? String {
+            return (name, address, country)
+        }
+    } catch {
+        print("Error reading configuration file:", error)
+    }
+
+    return nil
+}
+
 // Function to write user information to configuration file
 func writeUserInfo(name: String, address: String, identificationNumber: String) {
     let fileManager = FileManager.default
