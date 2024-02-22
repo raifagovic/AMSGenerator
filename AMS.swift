@@ -84,6 +84,35 @@ func writeUserInfo(name: String, address: String, identificationNumber: String) 
     }
 }
 
+// Function to write client information to configuration file
+func writeClientInfo(name: String, address: String, country: String) {
+    let fileManager = FileManager.default
+    let configURL = URL(fileURLWithPath: "config.json")
+
+    // Create client dictionary
+    let client: [String: Any] = [
+        "payerName": name,
+        "payerAddress": address,
+        "payerCountry": country
+    ]
+
+    // Create configuration dictionary
+    let config: [String: Any] = [
+        "client": client
+    ]
+
+    // Serialize configuration dictionary to JSON data
+    do {
+        let jsonData = try JSONSerialization.data(withJSONObject: config, options: .prettyPrinted)
+        // Write JSON data to configuration file
+        try jsonData.write(to: configURL)
+        print("Client information saved to configuration file.")
+    } catch {
+        print("Error writing configuration file:", error)
+    }
+}
+
+
 // Read user information from configuration file
 var (savedName, savedAddress, savedIdentificationNumber) = readUserInfo()
 
