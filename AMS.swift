@@ -44,9 +44,9 @@ func readClientInfo() -> (payerName: String, payerAddress: String, payerCountry:
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
         if let client = json?["client"] as? [String: Any],
-           let name = client["payerName"] as? String,
-           let address = client["payerAddress"] as? String,
-           let country = client["payerCountry"] as? String {
+           let payerName = client["payerName"] as? String,
+           let payerAddress = client["payerAddress"] as? String,
+           let payerCountry = client["payerCountry"] as? String {
             return (payerName, payerAddress, payerCountry)
         }
     } catch {
@@ -58,7 +58,6 @@ func readClientInfo() -> (payerName: String, payerAddress: String, payerCountry:
 
 // Function to write user information to configuration file
 func writeUserInfo(name: String, address: String, identificationNumber: String) {
-    let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
 
     // Create user dictionary
@@ -86,7 +85,6 @@ func writeUserInfo(name: String, address: String, identificationNumber: String) 
 
 // Function to write client information to configuration file
 func writeClientInfo(payerName: String, payerAddress: String, payerCountry: String) {
-    let fileManager = FileManager.default
     let configURL = URL(fileURLWithPath: "config.json")
 
     // Create client dictionary
@@ -117,7 +115,7 @@ func writeClientInfo(payerName: String, payerAddress: String, payerCountry: Stri
 var (savedName, savedAddress, savedIdentificationNumber) = readUserInfo()
 
 // Read client information from configuration file
-var (savedPayerName, savedPayerAddress, savedPayerCountry) = readClientInfo() ?? ("", "", "")
+var (savedPayerName, savedPayerAddress, savedPayerCountry) = readClientInfo()
 
 // Parse command-line arguments
 let commandLineArgs = CommandLine.arguments
@@ -223,10 +221,10 @@ if savedPayerName.isEmpty || savedPayerAddress.isEmpty || savedPayerCountry.isEm
     }
     
     // Write client information to configuration file
-    writeUserInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
+    writeClientInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
 } else {
     // If client information is complete, write it to configuration file
-    writeUserInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
+    writeClientInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
 }
 
 
