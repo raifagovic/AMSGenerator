@@ -117,7 +117,7 @@ func writeClientInfo(name: String, address: String, country: String) {
 var (savedName, savedAddress, savedIdentificationNumber) = readUserInfo()
 
 // Read client information from configuration file
-var (savedPayerName, savedPayerAddress, savedPayerCountry) = readClientInfo()
+var (savedPayerName, savedPayerAddress, savedPayerCountry) = readClientInfo() ?? ("", "", "")
 
 // Parse command-line arguments
 let commandLineArgs = CommandLine.arguments
