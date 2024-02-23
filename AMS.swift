@@ -1,237 +1,6 @@
 import Foundation
 import Cocoa
 
-
-// Function to read user information from configuration file
-func readUserInfo() -> (name: String, address: String, identificationNumber: String) {
-    let fileManager = FileManager.default
-    let configURL = URL(fileURLWithPath: "config.json")
-
-    // Check if configuration file exists
-    guard fileManager.fileExists(atPath: configURL.path) else {
-        return ("", "", "")
-    }
-
-    do {
-        let data = try Data(contentsOf: configURL)
-        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-        if let user = json?["user"] as? [String: Any],
-           let name = user["name"] as? String,
-           let address = user["address"] as? String,
-           let identificationNumber = user["identificationNumber"] as? String {
-            return (name, address, identificationNumber)
-        }
-    } catch {
-        print("Error reading configuration file:", error)
-    }
-
-    return ("", "", "")
-}
-
-// Function to read client information from configuration file
-func readClientInfo() -> (payerName: String, payerAddress: String, payerCountry: String)? {
-    let fileManager = FileManager.default
-    let configURL = URL(fileURLWithPath: "config.json")
-
-    // Check if configuration file exists
-    guard fileManager.fileExists(atPath: configURL.path) else {
-        return ("", "", "")
-    }
-
-    do {
-        let data = try Data(contentsOf: configURL)
-        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-        if let client = json?["client"] as? [String: Any],
-           let payerName = client["payerName"] as? String,
-           let payerAddress = client["payerAddress"] as? String,
-           let payerCountry = client["payerCountry"] as? String {
-            return (payerName, payerAddress, payerCountry)
-        }
-    } catch {
-        print("Error reading configuration file:", error)
-    }
-
-    return ("", "", "")
-}
-
-// Function to write user information to configuration file
-func writeUserInfo(name: String, address: String, identificationNumber: String) {
-    let configURL = URL(fileURLWithPath: "config.json")
-
-    // Create user dictionary
-    let user: [String: Any] = [
-        "name": name,
-        "address": address,
-        "identificationNumber": identificationNumber
-    ]
-
-    // Create configuration dictionary
-    let config: [String: Any] = [
-        "user": user
-    ]
-
-    // Serialize configuration dictionary to JSON data
-    do {
-        let jsonData = try JSONSerialization.data(withJSONObject: config, options: .prettyPrinted)
-        // Write JSON data to configuration file
-        try jsonData.write(to: configURL)
-        print("User information saved to configuration file.")
-    } catch {
-        print("Error writing configuration file:", error)
-    }
-}
-
-// Function to write client information to configuration file
-func writeClientInfo(payerName: String, payerAddress: String, payerCountry: String) {
-    let configURL = URL(fileURLWithPath: "config.json")
-
-    // Create client dictionary
-    let client: [String: Any] = [
-        "payerName": payerName,
-        "payerAddress": payerAddress,
-        "payerCountry": payerCountry
-    ]
-
-    // Create configuration dictionary
-    let config: [String: Any] = [
-        "client": client
-    ]
-
-    // Serialize configuration dictionary to JSON data
-    do {
-        let jsonData = try JSONSerialization.data(withJSONObject: config, options: .prettyPrinted)
-        // Write JSON data to configuration file
-        try jsonData.write(to: configURL)
-        print("Client information saved to configuration file.")
-    } catch {
-        print("Error writing configuration file:", error)
-    }
-}
-
-
-// Read user information from configuration file
-var (savedName, savedAddress, savedIdentificationNumber) = readUserInfo()
-
-// Read client information from configuration file
-var (savedPayerName, savedPayerAddress, savedPayerCountry) = readClientInfo()
-
-// Parse command-line arguments
-let commandLineArgs = CommandLine.arguments
-
-for (index, argument) in commandLineArgs.enumerated() {
-    switch argument {
-    case "-n":
-        // Flag for name
-        if index + 1 < commandLineArgs.count {
-            savedName = commandLineArgs[index + 1]
-        }
-    case "-a":
-        // Flag for address
-        if index + 1 < commandLineArgs.count {
-            savedAddress = commandLineArgs[index + 1]
-        }
-    case "-i":
-        // Flag for identification number
-        if index + 1 < commandLineArgs.count {
-            savedIdentificationNumber = commandLineArgs[index + 1]
-        }
-    case "-p":
-        // Flag for payer name
-        if let clientInfo = readClientInfo() {
-            savedPayerName = commandLineArgs[index + 1]
-        }
-    case "-pa":
-        // Flag for payer address
-        if let clientInfo = readClientInfo() {
-            savedPayerAddress = commandLineArgs[index + 1]
-        }
-    case "-pc":
-        // Flag for payer country
-        if let clientInfo = readClientInfo() {
-            savedPayerCountry = commandLineArgs[index + 1]
-        }
-    default:
-        break
-    }
-}
-
-// Check if user information is incomplete and prompt for input if needed
-if savedName.isEmpty || savedAddress.isEmpty || savedIdentificationNumber.isEmpty {
-    print("Please enter your information:")
-
-    // Prompt for name if not saved
-    if savedName.isEmpty {
-        print("Name:")
-        if let input = readLine() {
-            savedName = input
-        }
-    }
-
-    // Prompt for address if not saved
-    if savedAddress.isEmpty {
-        print("Address:")
-        if let input = readLine() {
-            savedAddress = input
-        }
-    }
-
-    // Prompt for identification number if not saved
-    if savedIdentificationNumber.isEmpty {
-        print("Identification Number:")
-        if let input = readLine() {
-            savedIdentificationNumber = input
-        }
-    }
-
-    // Write user information to configuration file
-    writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
-} else {
-    // If user information is complete, write it to configuration file
-    writeUserInfo(name: savedName, address: savedAddress, identificationNumber: savedIdentificationNumber)
-}
-
-// Check if client information is incomplete and prompt for input if needed
-if savedPayerName.isEmpty || savedPayerAddress.isEmpty || savedPayerCountry.isEmpty {
-    print("Please enter client information:")
-    
-    // Prompt for payer name if not saved
-    if savedPayerName.isEmpty {
-        print("Payer Name:")
-        if let input = readLine() {
-            savedPayerName = input
-        }
-    }
-    
-    // Prompt for payer address if not saved
-    if savedPayerAddress.isEmpty {
-        print("Payer Address:")
-        if let input = readLine() {
-            savedPayerAddress = input
-        }
-    }
-    
-    // Prompt for payer country if not saved
-    if savedPayerCountry.isEmpty {
-        print("Payer Country:")
-        if let input = readLine() {
-            savedPayerCountry = input
-        }
-    }
-    
-    // Write client information to configuration file
-    writeClientInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
-} else {
-    // If client information is complete, write it to configuration file
-    writeClientInfo(payerName: savedPayerName, payerAddress: savedPayerAddress, payerCountry: savedPayerCountry)
-}
-
-
-
-
-
-
 // Set the path to the PNG image in the Resources folder
 let imagePath = "Resources/ams_form.png"
 
@@ -453,17 +222,17 @@ let nameSize = nameText.size()
 let nameRect = NSRect(origin: NSPoint(x: 120, y: 1170), size: nameSize)
 nameText.draw(with: nameRect)
 
-// Draw the address using savedAddress
-let addressText = NSAttributedString(string: savedAddress, attributes: textAttributes)
+// Draw the address
+let addressText = NSAttributedString(string: address, attributes: textAttributes)
 let addressSize = addressText.size()
 let addressRect = NSRect(origin: NSPoint(x: 120, y: 1090), size: addressSize)
 addressText.draw(with: addressRect)
 
-// Draw the identification number using savedIdentificationNumber
+// Draw the identification number
 let identificationNumberCoordinates = NSPoint(x: 1010, y: 1180)
 var currentX = identificationNumberCoordinates.x
 
-for digit in savedIdentificationNumber {
+for digit in identificationNumber {
     let digitText = NSAttributedString(string: String(digit), attributes: textAttributes)
     let digitSize = digitText.size()
     let digitRect = NSRect(origin: NSPoint(x: currentX, y: identificationNumberCoordinates.y), size: digitSize)
@@ -487,14 +256,14 @@ let payerNameSize = payerNameText.size()
 let payerNameRect = NSRect(origin: NSPoint(x: 120, y: 925), size: payerNameSize)
 payerNameText.draw(with: payerNameRect)
 
-// Draw the payer address with savedPayerAddress
-let payerAddressText = NSAttributedString(string: savedPayerAddress, attributes: textAttributes)
+// Draw the payer address
+let payerAddressText = NSAttributedString(string: payerAddress, attributes: textAttributes)
 let payerAddressSize = payerAddressText.size()
 let payerAddressRect = NSRect(origin: NSPoint(x: 945, y: 925), size: payerAddressSize)
 payerAddressText.draw(with: payerAddressRect)
 
-// Draw the payer country with savedPayerCountry
-let payerCountryText = NSAttributedString(string: savedPayerCountry, attributes: textAttributes)
+// Draw the payer country
+let payerCountryText = NSAttributedString(string: payerCountry, attributes: textAttributes)
 let payerCountrySize = payerCountryText.size()
 let payerCountryRect = NSRect(origin: NSPoint(x: 1780, y: 925), size: payerCountrySize)
 payerCountryText.draw(with: payerCountryRect)
