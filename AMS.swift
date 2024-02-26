@@ -41,6 +41,58 @@ func readConfigFile() -> (name: String, address: String, identificationNumber: S
     return nil
 }
 
+// Function to parse command-line arguments
+func parseCommandLineArgs() -> (name: String, address: String, identificationNumber: String, payerName: String, payerAddress: String, payerCountry: String) {
+    var name: String = ""
+    var address: String = ""
+    var identificationNumber: String = ""
+    var payerName: String = ""
+    var payerAddress: String = ""
+    var payerCountry: String = ""
+    
+    let arguments = CommandLine.arguments
+    
+    for (index, argument) in arguments.enumerated() {
+        switch argument {
+        case "-n":
+            // Flag for name
+            if index + 1 < arguments.count {
+                name = arguments[index + 1]
+            }
+        case "-a":
+            // Flag for address
+            if index + 1 < arguments.count {
+                address = arguments[index + 1]
+            }
+        case "-i":
+            // Flag for identification number
+            if index + 1 < arguments.count {
+                identificationNumber = arguments[index + 1]
+            }
+        case "-p":
+            // Flag for payer name
+            if index + 1 < arguments.count {
+                payerName = arguments[index + 1]
+            }
+        case "-pa":
+            // Flag for payer address
+            if index + 1 < arguments.count {
+                payerAddress = arguments[index + 1]
+            }
+        case "-pc":
+            // Flag for payer country
+            if index + 1 < arguments.count {
+                payerCountry = arguments[index + 1]
+            }
+        default:
+            break
+        }
+    }
+    
+    return (name, address, identificationNumber, payerName, payerAddress, payerCountry)
+}
+
+
 
 // Function to draw formatted date on the image
 func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
