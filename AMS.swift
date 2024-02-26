@@ -16,6 +16,32 @@ let mutableImage = image.copy() as! NSImage
 let currentPage: Int = 1
 let totalPages: Int = 1
 
+// Function to read configuration from JSON file
+func readConfigFile() -> (name: String, address: String, identificationNumber: String, payerName: String, payerAddress: String, payerCountry: String)? {
+    let configURL = URL(fileURLWithPath: "config.json")
+    
+    do {
+        let data = try Data(contentsOf: configURL)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        
+        if let user = json?["user"] as? [String: String],
+           let name = user["name"],
+           let address = user["address"],
+           let identificationNumber = user["identificationNumber"],
+           let client = json?["client"] as? [String: String],
+           let payerName = client["payerName"],
+           let payerAddress = client["payerAddress"],
+           let payerCountry = client["payerCountry"] {
+            return (name, address, identificationNumber, payerName, payerAddress, payerCountry)
+        }
+    } catch {
+        print("Error reading configuration file:", error)
+    }
+    
+    return nil
+}
+
+
 // Function to draw formatted date on the image
 func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
     var currentX = coordinates.x
