@@ -4,4 +4,10 @@
     "address" : "Djerzelezova",
     "identificationNumber" : "1234567890123"
   }
+  
+  "client" : {
+    "payerName" : "Paul",
+    "payerAddress" : "Unknown hero",
+    "payerCountry" : "USA"
+  }
 }
