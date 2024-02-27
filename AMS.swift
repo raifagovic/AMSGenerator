@@ -252,6 +252,18 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .foregroundColor: NSColor.black
 ]
 
+// Read from config file if available, otherwise use command-line arguments
+var userInfo: UserInfo
+var clientInfo: ClientInfo
+
+if let configData = readConfigFile() {
+    userInfo = configData.user
+    clientInfo = configData.client
+} else {
+    userInfo = UserInfo(name: name, address: address, identificationNumber: identificationNumber)
+    clientInfo = ClientInfo(payerName: payerName, payerAddress: payerAddress, payerCountry: payerCountry)
+}
+
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
 let currentPageSize = currentPageText.size()
