@@ -16,40 +16,24 @@ let mutableImage = image.copy() as! NSImage
 let currentPage: Int = 1
 let totalPages: Int = 1
 
-struct User {
-    var name: String
-    var address: String
-    var identificationNumber: String
-}
+// Read configuration from JSON file
+let configURL = URL(fileURLWithPath: "config.json")
 
-struct Client {
-    var payerName: String
-    var payerAddress: String
-    var payerCountry: String
-}
+do {
+    let data = try Data(contentsOf: configURL)
+    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
-func readConfigFile() -> (user: User, client: Client)? {
-    let configURL = URL(fileURLWithPath: "config.json")
-    
-    do {
-        let data = try Data(contentsOf: configURL)
-        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        
-        if let userDict = json?["user"] as? [String: String],
-           let clientDict = json?["client"] as? [String: String] {
-            let user = User(name: userDict["name"] ?? "",
-                            address: userDict["address"] ?? "",
-                            identificationNumber: userDict["identificationNumber"] ?? "")
-            let client = Client(payerName: clientDict["payerName"] ?? "",
-                                payerAddress: clientDict["payerAddress"] ?? "",
-                                payerCountry: clientDict["payerCountry"] ?? "")
-            return (user, client)
-        }
-    } catch {
-        print("Error reading configuration file:", error)
+    if let userDict = json?["user"] as? [String: String],
+       let clientDict = json?["client"] as? [String: String] {
+        name = userDict["name"] ?? ""
+        address = userDict["address"] ?? ""
+        identificationNumber = userDict["identificationNumber"] ?? ""
+        payerName = clientDict["payerName"] ?? ""
+        payerAddress = clientDict["payerAddress"] ?? ""
+        payerCountry = clientDict["payerCountry"] ?? ""
     }
-    
-    return nil
+} catch {
+    print("Error reading configuration file:", error)
 }
 
 
@@ -241,18 +225,6 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
     .foregroundColor: NSColor.black
 ]
-
-// Read from config file if available, otherwise use command-line arguments
-var userInfo: User
-var clientInfo: Client
-
-if let configData = readConfigFile() {
-    userInfo = configData.user
-    clientInfo = configData.client
-} else {
-    userInfo = User(name: name, address: address, identificationNumber: identificationNumber)
-    clientInfo = Client(payerName: payerName, payerAddress: payerAddress, payerCountry: payerCountry)
-}
 
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
