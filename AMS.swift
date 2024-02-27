@@ -16,13 +16,13 @@ let mutableImage = image.copy() as! NSImage
 let currentPage: Int = 1
 let totalPages: Int = 1
 
-struct UserInfo {
+struct User {
     var name: String
     var address: String
     var identificationNumber: String
 }
 
-struct ClientInfo {
+struct Client {
     var payerName: String
     var payerAddress: String
     var payerCountry: String
@@ -36,13 +36,13 @@ func readConfigFile() -> (user: User, client: Client)? {
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         
         if let userDict = json?["user"] as? [String: String],
-           let clientDict = json?["client"] as? [String: String],
-           let user = User(name: userDict["name"] ?? "",
-                           address: userDict["address"] ?? "",
-                           identificationNumber: userDict["identificationNumber"] ?? ""),
-           let client = Client(payerName: clientDict["payerName"] ?? "",
-                               payerAddress: clientDict["payerAddress"] ?? "",
-                               payerCountry: clientDict["payerCountry"] ?? "") {
+           let clientDict = json?["client"] as? [String: String] {
+            let user = User(name: userDict["name"] ?? "",
+                            address: userDict["address"] ?? "",
+                            identificationNumber: userDict["identificationNumber"] ?? "")
+            let client = Client(payerName: clientDict["payerName"] ?? "",
+                                payerAddress: clientDict["payerAddress"] ?? "",
+                                payerCountry: clientDict["payerCountry"] ?? "")
             return (user, client)
         }
     } catch {
@@ -243,15 +243,15 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 ]
 
 // Read from config file if available, otherwise use command-line arguments
-var userInfo: UserInfo
-var clientInfo: ClientInfo
+var userInfo: User
+var clientInfo: Client
 
 if let configData = readConfigFile() {
     userInfo = configData.user
     clientInfo = configData.client
 } else {
-    userInfo = UserInfo(name: name, address: address, identificationNumber: identificationNumber)
-    clientInfo = ClientInfo(payerName: payerName, payerAddress: payerAddress, payerCountry: payerCountry)
+    userInfo = User(name: name, address: address, identificationNumber: identificationNumber)
+    clientInfo = Client(payerName: payerName, payerAddress: payerAddress, payerCountry: payerCountry)
 }
 
 // Draw the current page
