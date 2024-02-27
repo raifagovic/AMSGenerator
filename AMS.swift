@@ -28,38 +28,28 @@ struct ClientInfo {
     var payerCountry: String
 }
 
-// Function to read configuration from JSON file
-func readConfigFile() -> (user: UserInfo, client: ClientInfo)? {
-    let fileManager = FileManager.default
+func readConfigFile() -> (user: User, client: Client)? {
     let configURL = URL(fileURLWithPath: "config.json")
-    
-    guard fileManager.fileExists(atPath: configURL.path) else {
-        return nil
-    }
     
     do {
         let data = try Data(contentsOf: configURL)
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         
-        guard let userDict = json?["user"] as? [String: Any],
-              let clientDict = json?["client"] as? [String: Any],
-              let userName = userDict["name"] as? String,
-              let userAddress = userDict["address"] as? String,
-              let userIdentificationNumber = userDict["identificationNumber"] as? String,
-              let payerName = clientDict["payerName"] as? String,
-              let payerAddress = clientDict["payerAddress"] as? String,
-              let payerCountry = clientDict["payerCountry"] as? String else {
-            return nil
+        if let userDict = json?["user"] as? [String: String],
+           let clientDict = json?["client"] as? [String: String],
+           let user = User(name: userDict["name"] ?? "",
+                           address: userDict["address"] ?? "",
+                           identificationNumber: userDict["identificationNumber"] ?? ""),
+           let client = Client(payerName: clientDict["payerName"] ?? "",
+                               payerAddress: clientDict["payerAddress"] ?? "",
+                               payerCountry: clientDict["payerCountry"] ?? "") {
+            return (user, client)
         }
-        
-        let user = UserInfo(name: userName, address: userAddress, identificationNumber: userIdentificationNumber)
-        let client = ClientInfo(payerName: payerName, payerAddress: payerAddress, payerCountry: payerCountry)
-        
-        return (user, client)
     } catch {
         print("Error reading configuration file:", error)
-        return nil
     }
+    
+    return nil
 }
 
 
