@@ -22,6 +22,12 @@ struct UserInfo {
     var identificationNumber: String
 }
 
+struct ClientInfo {
+    var payerName: String
+    var payerAddress: String
+    var payerCountry: String
+}
+
 // Function to read configuration from JSON file
 func readConfigFile() -> (name: String, address: String, identificationNumber: String, payerName: String, payerAddress: String, payerCountry: String)? {
     let configURL = URL(fileURLWithPath: "config.json")
