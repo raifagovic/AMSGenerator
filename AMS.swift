@@ -16,14 +16,20 @@ let mutableImage = image.copy() as! NSImage
 let currentPage: Int = 1
 let totalPages: Int = 1
 
+struct UserInfo {
+    var name: String
+    var address: String
+    var identificationNumber: String
+}
+
 // Function to read configuration from JSON file
 func readConfigFile() -> (name: String, address: String, identificationNumber: String, payerName: String, payerAddress: String, payerCountry: String)? {
     let configURL = URL(fileURLWithPath: "config.json")
-    
+
     do {
         let data = try Data(contentsOf: configURL)
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        
+
         if let user = json?["user"] as? [String: String],
            let name = user["name"],
            let address = user["address"],
@@ -37,61 +43,9 @@ func readConfigFile() -> (name: String, address: String, identificationNumber: S
     } catch {
         print("Error reading configuration file:", error)
     }
-    
+
     return nil
 }
-
-// Function to parse command-line arguments
-func parseCommandLineArgs() -> (name: String, address: String, identificationNumber: String, payerName: String, payerAddress: String, payerCountry: String) {
-    var name: String = ""
-    var address: String = ""
-    var identificationNumber: String = ""
-    var payerName: String = ""
-    var payerAddress: String = ""
-    var payerCountry: String = ""
-    
-    let arguments = CommandLine.arguments
-    
-    for (index, argument) in arguments.enumerated() {
-        switch argument {
-        case "-n":
-            // Flag for name
-            if index + 1 < arguments.count {
-                name = arguments[index + 1]
-            }
-        case "-a":
-            // Flag for address
-            if index + 1 < arguments.count {
-                address = arguments[index + 1]
-            }
-        case "-i":
-            // Flag for identification number
-            if index + 1 < arguments.count {
-                identificationNumber = arguments[index + 1]
-            }
-        case "-p":
-            // Flag for payer name
-            if index + 1 < arguments.count {
-                payerName = arguments[index + 1]
-            }
-        case "-pa":
-            // Flag for payer address
-            if index + 1 < arguments.count {
-                payerAddress = arguments[index + 1]
-            }
-        case "-pc":
-            // Flag for payer country
-            if index + 1 < arguments.count {
-                payerCountry = arguments[index + 1]
-            }
-        default:
-            break
-        }
-    }
-    
-    return (name, address, identificationNumber, payerName, payerAddress, payerCountry)
-}
-
 
 
 // Function to draw formatted date on the image
@@ -127,28 +81,28 @@ func drawFormattedDate(_ dateInput: String, at coordinates: NSPoint, with attrib
 
 func drawFormattedMonthYear(_ monthYearFlag: String, at coordinates: NSPoint, with attributes: [NSAttributedString.Key: Any]) {
     var currentX = coordinates.x
-    
+
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MM.yyyy."
-    
+
     if let date = dateFormatter.date(from: monthYearFlag) {
         dateFormatter.dateFormat = "MMyy"
         let formattedMonthYear = dateFormatter.string(from: date)
-        
+
         for (index, digit) in formattedMonthYear.enumerated() {
             let spacing: CGFloat = (index == 2) ? 84 : 25.5
-            
+
             if index == 0 {
                 currentX += 0 // If the first digit, no initial spacing
             } else {
                 currentX += spacing
             }
-            
+
             let digitText = NSAttributedString(string: String(digit), attributes: attributes)
             let digitSize = digitText.size()
             let digitRect = NSRect(origin: NSPoint(x: currentX, y: coordinates.y), size: digitSize)
             digitText.draw(with: digitRect)
-            
+
             // Move to the next position with the calculated spacing
             currentX += digitSize.width
         }
@@ -274,7 +228,7 @@ let totalTaxDifferenceForPayment = taxDifferenceForPayment
 let deductionCoordinates = NSPoint(x: 0, y: 0)
 let spacingBetweenDigits: CGFloat = 25.5
 
-    
+
 mutableImage.lockFocus()
 
 // Use NSFont and NSColor for text attributes
@@ -316,7 +270,7 @@ for digit in identificationNumber {
     let digitSize = digitText.size()
     let digitRect = NSRect(origin: NSPoint(x: currentX, y: identificationNumberCoordinates.y), size: digitSize)
     digitText.draw(with: digitRect)
-    
+
     // Move to the next position with spacingBetweenDigits
     currentX += digitSize.width + spacingBetweenDigits
 }
@@ -431,7 +385,7 @@ let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
 if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
     let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
     let jpegData = bitmapRep.representation(using: .jpeg, properties: [:])
-    
+
     do {
         try jpegData?.write(to: outputURL)
         print("Image saved to \(outputURL.path)")
@@ -441,4 +395,6 @@ if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints:
 } else {
     print("Error getting CGImage representation of the image.")
 }
+
+
 
