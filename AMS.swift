@@ -239,6 +239,11 @@ do {
         payerName = clientDict["payerName"] ?? ""
         payerAddress = clientDict["payerAddress"] ?? ""
         payerCountry = clientDict["payerCountry"] ?? ""
+    }
+    
+} catch {
+    print("Error reading configuration file:", error)
+}
         
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
@@ -383,10 +388,6 @@ totalTaxDifferenceForPaymentText.draw(with: totalTaxDifferenceForPaymentRect)
         
 
 mutableImage.unlockFocus()
-
-    } catch {
-        print("Error reading configuration file:", error)
-    }
     
 // Save the final image
 let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
