@@ -227,22 +227,24 @@ let textAttributes: [NSAttributedString.Key: Any] = [
 ]
 
 // Read configuration from JSON file
-do {
-    let data = try Data(contentsOf: configURL)
-    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-    if let userDict = json?["user"] as? [String: String],
-       let clientDict = json?["client"] as? [String: String] {
-        name = userDict["name"] ?? ""
-        address = userDict["address"] ?? ""
-        identificationNumber = userDict["identificationNumber"] ?? ""
-        payerName = clientDict["payerName"] ?? ""
-        payerAddress = clientDict["payerAddress"] ?? ""
-        payerCountry = clientDict["payerCountry"] ?? ""
+if name.isEmpty || address.isEmpty || identificationNumber.isEmpty || payerName.isEmpty || payerAddress.isEmpty || payerCountry.isEmpty {
+    do {
+        let data = try Data(contentsOf: configURL)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        
+        if let userDict = json?["user"] as? [String: String],
+           let clientDict = json?["client"] as? [String: String] {
+            name = userDict["name"] ?? ""
+            address = userDict["address"] ?? ""
+            identificationNumber = userDict["identificationNumber"] ?? ""
+            payerName = clientDict["payerName"] ?? ""
+            payerAddress = clientDict["payerAddress"] ?? ""
+            payerCountry = clientDict["payerCountry"] ?? ""
+        }
+        
+    } catch {
+        print("Error reading configuration file:", error)
     }
-    
-} catch {
-    print("Error reading configuration file:", error)
 }
         
 // Draw the current page
