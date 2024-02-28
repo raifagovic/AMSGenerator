@@ -226,6 +226,20 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .foregroundColor: NSColor.black
 ]
 
+// Read configuration from JSON file
+do {
+    let data = try Data(contentsOf: configURL)
+    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+    if let userDict = json?["user"] as? [String: String],
+       let clientDict = json?["client"] as? [String: String] {
+        name = userDict["name"] ?? ""
+        address = userDict["address"] ?? ""
+        identificationNumber = userDict["identificationNumber"] ?? ""
+        payerName = clientDict["payerName"] ?? ""
+        payerAddress = clientDict["payerAddress"] ?? ""
+        payerCountry = clientDict["payerCountry"] ?? ""
+        
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
 let currentPageSize = currentPageText.size()
@@ -366,9 +380,14 @@ let totalTaxDifferenceForPaymentText = NSAttributedString(string: formattedTotal
 let totalTaxDifferenceForPaymentSize = totalTaxDifferenceForPaymentText.size()
 let totalTaxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 344), size: totalTaxDifferenceForPaymentSize)
 totalTaxDifferenceForPaymentText.draw(with: totalTaxDifferenceForPaymentRect)
+        
 
 mutableImage.unlockFocus()
 
+    } catch {
+        print("Error reading configuration file:", error)
+    }
+    
 // Save the final image
 let outputURL = URL(fileURLWithPath: "Resources/output.jpg")
 if let cgImage = mutableImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
