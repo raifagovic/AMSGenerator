@@ -197,7 +197,6 @@ let totalTaxDifferenceForPayment = taxDifferenceForPayment
 let deductionCoordinates = NSPoint(x: 0, y: 0)
 let spacingBetweenDigits: CGFloat = 25.5
 
-
 mutableImage.lockFocus()
 
 // Use NSFont and NSColor for text attributes
@@ -369,7 +368,6 @@ let totalTaxDifferenceForPaymentSize = totalTaxDifferenceForPaymentText.size()
 let totalTaxDifferenceForPaymentRect = NSRect(origin: NSPoint(x: 2025, y: 344), size: totalTaxDifferenceForPaymentSize)
 totalTaxDifferenceForPaymentText.draw(with: totalTaxDifferenceForPaymentRect)
         
-
 mutableImage.unlockFocus()
     
 // Save the final image
