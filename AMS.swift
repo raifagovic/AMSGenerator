@@ -204,28 +204,6 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
     .foregroundColor: NSColor.black
 ]
-
-// Read configuration from JSON file
-if name.isEmpty || address.isEmpty || identificationNumber.isEmpty || payerName.isEmpty || payerAddress.isEmpty || payerCountry.isEmpty {
-    let configURL = URL(fileURLWithPath: "config.json")
-    do {
-        let data = try Data(contentsOf: configURL)
-        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        
-        if let userDict = json?["user"] as? [String: String],
-           let clientDict = json?["client"] as? [String: String] {
-            name = userDict["name"] ?? ""
-            address = userDict["address"] ?? ""
-            identificationNumber = userDict["identificationNumber"] ?? ""
-            payerName = clientDict["payerName"] ?? ""
-            payerAddress = clientDict["payerAddress"] ?? ""
-            payerCountry = clientDict["payerCountry"] ?? ""
-        }
-        
-    } catch {
-        print("Error reading configuration file:", error)
-    }
-}
         
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
