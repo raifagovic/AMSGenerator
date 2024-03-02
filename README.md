@@ -22,6 +22,19 @@ To use this script, follow the steps below:
 
    ----------image from the terminal------------
 
+Replace [flags] with the desired command-line flags and their values. The available flags are:
+
+* '-n [name]': Specifies the name of the invoice recipient.
+* '-a [address]': Specifies the address of the invoice recipient.
+* '-i [identificationNumber]': Specifies the identification number of the invoice recipient.
+* '-d [date]': Specifies the date of the invoice in the format "dd.MM.yyyy".
+* '-m [monthYear]': Specifies the month and year of the invoice in the format "MM.yyyy".
+* '-p [payerName]': Specifies the name of the payer.
+* '-pa [payerAddress]': Specifies the address of the payer.
+* '-pc [payerCountry]': Specifies the country of the payer.
+* '-amount [amount]': Specifies the payment amount.
+* '-deduction [deduction]': Specifies the deduction amount.
+
 
 ## Author
 [Raif Agović](https://twitter.com/raifagovic)
