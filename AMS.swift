@@ -204,6 +204,52 @@ let textAttributes: [NSAttributedString.Key: Any] = [
     .font: NSFont.systemFont(ofSize: 27), // Adjusted font size to 27
     .foregroundColor: NSColor.black
 ]
+
+// Read configuration from env file
+if name.isEmpty || address.isEmpty || identificationNumber.isEmpty || payerName.isEmpty || payerAddress.isEmpty || payerCountry.isEmpty {
+    let envFilePath = "config.env" // Path to your env file
+
+    do {
+        // Read contents of the env file
+        let envContents = try String(contentsOfFile: envFilePath)
+        
+        // Split the file contents into lines
+        let lines = envContents.components(separatedBy: .newlines)
+        
+        // Process each line
+        for line in lines {
+            // Split each line into key-value pairs
+            let components = line.components(separatedBy: "=")
+            
+            // Ensure that the line is valid and contains a key-value pair
+            if components.count == 2 {
+                let key = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                let value = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                // Assign values to configuration variables based on keys
+                switch key {
+                case "NAME":
+                    name = value
+                case "ADDRESS":
+                    address = value
+                case "IDENTIFICATION_NUMBER":
+                    identificationNumber = value
+                case "PAYER_NAME":
+                    payerName = value
+                case "PAYER_ADDRESS":
+                    payerAddress = value
+                case "PAYER_COUNTRY":
+                    payerCountry = value
+                default:
+                    break // Handle other keys if needed
+                }
+            }
+        }
+    } catch {
+        print("Error reading configuration file:", error)
+    }
+}
+
         
 // Draw the current page
 let currentPageText = NSAttributedString(string: "\(currentPage)", attributes: [.font: NSFont.systemFont(ofSize: 27), .foregroundColor: NSColor.black])
