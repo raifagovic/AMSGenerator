@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="ams_form_example.jpg"/>
+</p>
+
 # AMS Generator
 
 
