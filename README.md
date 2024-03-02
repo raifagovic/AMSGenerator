@@ -4,6 +4,8 @@
 
 # AMS Generator
 
+This script generates an invoice with provided information and saves it as an image file.
+
 
 ## Author
 [Raif Agović](https://twitter.com/raifagovic)
