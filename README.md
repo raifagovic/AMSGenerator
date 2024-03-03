@@ -20,8 +20,8 @@ To use this script, follow the steps below:
 
 5. Run the script with the following command:
 
-```bash
-$ swift AMS.swift [flags]
+```
+swift AMS.swift [flags]
 ```
 
 Replace [flags] with the desired command-line flags and their values. The available flags are:
