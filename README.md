@@ -48,7 +48,11 @@ PAYER_ADDRESS=700 Walnut Ridge Dr, Irving, Texas 75038
 PAYER_COUNTRY=USA
 ```
 
-Additionally, if the -d (date) or -m (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
+If the -d (date) or -m (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
+
+## Example
+
+After running the script, the generated invoice image will be saved in the Resources folder as output.jpg. In our case this is the result:
 
 <p align="center">
   <img src="ams_form_example.jpg"/>
