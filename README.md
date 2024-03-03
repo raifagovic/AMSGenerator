@@ -68,6 +68,7 @@ swift AMS.swift -amount 2000
 
 After running the script, the generated invoice image will be saved in the Resources folder as output.jpg. In our case this is the result:
 
+
 <p align="center">
   <img src="ams_form_example.jpg"/>
 </p>
