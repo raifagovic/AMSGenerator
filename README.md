@@ -37,6 +37,8 @@ Replace [flags] with the desired command-line flags and their values. The availa
 * '-amount [amount]': Specifies the payment amount.
 * '-deduction [deduction]': Specifies the deduction amount.
 
+If any of the flags are not provided, the script will attempt to read the configuration from a file named config.env. Additionally, if the -d (date) or -m (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
+
 
 ## Author
 [Raif Agović](https://twitter.com/raifagovic)
