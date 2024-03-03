@@ -22,6 +22,7 @@ To use this script, follow the steps below:
 
 ```bash
 $ swift AMS.swift [flags]
+```
 
 Replace [flags] with the desired command-line flags and their values. The available flags are:
 
