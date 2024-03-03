@@ -57,7 +57,7 @@ Additionally, if the user is entitled to a 20% expense allowance, they will use 
 The script can be runned with all the flags like this: 
 
 ```
-swift AMS.swift -n Nedim Sahman -a Vranducka 20, 71000 Sarajevo -i 0103989190077 -d 03.03.2024. -m 03.2024. -p Paul Anderson -pa 700 Walnut Ridge Dr, Irving, Texas 75038 -pc USA -amount 2000.00 deduction 20
+swift AMS.swift -n "Nedim Sahman" -a "Vranducka 20, 71000 Sarajevo" -i 0103989190077 -d 03.03.2024. -m 03.2024. -p "Paul Anderson" -pa "700 Walnut Ridge Dr, Irving, Texas 75038" -pc USA -amount 2000.00 deduction 20
 ```
 
 But if the user and payer information are provided in the 'config.env' file, if the user wants to use today's date and if there is no deduction, the command for running the script will be this:
