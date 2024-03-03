@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="ams_form_example.jpg"/>
-</p>
 
 # AMS Generator
 
@@ -39,6 +36,9 @@ Replace [flags] with the desired command-line flags and their values. The availa
 
 If any of the flags related to the user (-n, -a, -i) or to the payer (-p, -pa, -pc) are not provided, the script will attempt to read the configuration from a file named 'config.env'. Additionally, if the -d (date) or -m (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
 
+<p align="center">
+  <img src="ams_form_example.jpg"/>
+</p>
 
 ## Author
 [Raif Agović](https://twitter.com/raifagovic)
