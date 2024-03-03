@@ -23,16 +23,16 @@ swift AMS.swift [flags]
 
 Replace [flags] with the desired command-line flags and their values. The available flags are:
 
-* '-n [name]': Specifies the name of the invoice recipient.
-* '-a [address]': Specifies the address of the invoice recipient.
-* '-i [identificationNumber]': Specifies the identification number of the invoice recipient.
-* '-d [date]': Specifies the date of the invoice in the format "dd.MM.yyyy".
-* '-m [monthYear]': Specifies the month and year of the invoice in the format "MM.yyyy".
-* '-p [payerName]': Specifies the name of the payer.
-* '-pa [payerAddress]': Specifies the address of the payer.
-* '-pc [payerCountry]': Specifies the country of the payer.
-* '-amount [amount]': Specifies the payment amount.
-* '-deduction [deduction]': Specifies the deduction amount.
+* '-n' [name]: Specifies the name of the invoice recipient.
+* '-a' [address]: Specifies the address of the invoice recipient.
+* '-i' [identificationNumber]: Specifies the identification number of the invoice recipient.
+* '-d' [date]: Specifies the date of the invoice in the format "dd.MM.yyyy".
+* '-m' [monthYear]: Specifies the month and year of the invoice in the format "MM.yyyy".
+* '-p' [payerName]: Specifies the name of the payer.
+* '-pa' [payerAddress]: Specifies the address of the payer.
+* '-pc' [payerCountry]: Specifies the country of the payer.
+* '-amount' [amount]: Specifies the payment amount.
+* '-deduction' [deduction]: Specifies the deduction amount.
 
 If any of the flags related to the user (-n, -a, -i) or to the payer (-p, -pa, -pc) are not provided, the script will attempt to read the configuration from a file named 'config.env'. The file should contain key-value pairs in the format:
 
@@ -48,9 +48,9 @@ PAYER_ADDRESS=700 Walnut Ridge Dr, Irving, Texas 75038
 PAYER_COUNTRY=USA
 ```
 
-If the -d (date) or -m (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
+If the '-d' (date) or '-m' (month and year) flags are not provided, they will be automatically added using the current date and month/year, respectively.
 
-Additionally, if the user is entitled to a 20% expense allowance, they will use the -deduction flag in this format: -deduction 20. Otherwise, they will omit this flag.
+Additionally, if the user is entitled to a 20% expense allowance, they will use the '-deduction' flag in this format: '-deduction 20'. Otherwise, they will omit this flag.
 
 ## Example
 
